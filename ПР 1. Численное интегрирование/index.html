@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Numerical integral</title>
+        <link rel="stylesheet" href="./styles.css">
+    </head>
+    <body>
+        <div class="interface">
+
+            <div class="function-examples_block">
+                <h3>Примеры функций</h3>
+                <ol class="function_list">
+                    <li>ln( x + sqrt( x^2 + 1.21 )) / x^3</li>
+                    <li>cos(x) / ( x^2 + 1 )</li>
+                    <li>cos(x) / ( sin(x) + ( 1 + sin(x) ))</li>
+                    <li>( 1 / x^2 ) * arcsin( x / 9 )</li>
+                    <li>sqrt( 9 - x^2 ) / x^2</li>
+                    <li>cos(x)^3 * cos( 3 * x )</li>
+                    <li>tg(x)</li>
+                </ol>
+            </div>
+
+            <div class="information">
+
+                <div class="data_input">
+                    <h3>Введите начало отрезка(a) и конец отрезка(b)</h3>
+
+                    <div class="data">
+                        <div class="input-label">
+                            <label for="a-cordinate">Начало отрезка</label>
+                            <input class="cord_input" type="text" name="a-cordinate">  
+                        </div>
+                        <div class="input-label">
+                            <label for="b-cordinate">Конец отрезка</label>
+                            <input class="cord_input" type="text" name="b-cordinate">
+                        </div>
+                        <div class="input-label">
+                            <label for="function-input">Введите функцию</label>
+                            <input type="text" class="func_input" name="function-input">
+                        </div>
+                        <div class="input-label">
+                            <label for="fragmentation-input">Количество разбиений</label>
+                            <input class="fragment_input" type="text"  name="fragmentation-input">
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="graph_chart">
+                    <div id="curve_chart" style="width: 900px; height: 500px"></div>
+                </div>
+
+                <div class="data_output">
+                    <div class="output-elem">
+                        <label>Итоговое количество разбиений</label>
+                        <div class="fragm_output"></div>
+                    </div>
+                    <div class="output-elem">
+                        <label>Результат</label>
+                        <div class="res_output"></div>
+                    </div>
+                    <div class="output-elem">
+                        <label>Погрешность</label>
+                        <div class="error_output"></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="btns-bar">
+                <button class="btn-Simpson btn">Расчитать по методу Симпсона</button>
+            </div>
+
+        </div>
+
+        <script src="https://www.gstatic.com/charts/loader.js"></script>
+        <script src="./script.js"></script>
+    </body>
+</html>

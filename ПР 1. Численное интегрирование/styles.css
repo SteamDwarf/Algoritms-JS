@@ -1,0 +1,118 @@
+*, *:after, *:before { box-sizing: border-box; }
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp,small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1.2;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+} 
+ol { 
+	padding-left: 1.4em;
+	list-style: decimal;
+}
+ul {
+	padding-left: 1.4em;
+	list-style: square;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+/*///////////////REFRESH END////////////////////////
+//////////////////////////////////////////////////*/
+body {
+	font-size: 1.2em;
+}
+.interface {
+    margin: 1% 0 0 13%;
+    display: flex;
+}
+.function-examples_block {
+	width: 400px;
+	padding: 20px;
+	box-shadow: -5px 0 10px 5px rgba(221, 221, 221, 1);
+	border-right: solid 5px #b3b3b3;
+}
+.function_list  li{
+	cursor: pointer;
+}
+.information {
+	padding: 20px 15px;
+    box-shadow: 0 0 10px 5px rgba(221, 221, 221, 1);
+}
+.data_input {
+	text-align: center;
+}
+h3 {
+	padding-bottom: 20px;
+}
+.data {
+	display: flex;
+	justify-content: space-around;
+}
+.input-label {
+    display: flex;
+    flex-direction: column;
+}
+input {
+	margin: 0 auto;
+	text-align: center;
+	outline: none;
+	border: solid 1px #b3b3b3;
+	border-radius: 4px;
+	font-size: 0.8em;
+}
+.cord_input {
+	width: 50px;
+}
+.func_input {
+	width: 250px;
+}
+.graph_chart {
+	margin: 15px 0;
+	border: 2px solid #4A90E2;
+	border-radius: 4px;
+}
+.data_output {
+	display: flex;
+	justify-content: space-around;
+	text-align: center;
+}
+.output-elem {
+	display: flex;
+	flex-direction: column;
+}
+.btns-bar {
+	padding: 123px 0;
+}
+.btn {
+	width: 180px;
+	padding: 8%;
+	font-size: 0.8em;
+	border: none;
+	background-color: #fff;
+	outline: none;
+	transition: background-color 0.5s, color 0.5s;
+	box-shadow: 5px 0 10px 5px rgba(221, 221, 221, 1);
+}
+.btn:hover {
+	background-color: #4A90E2;
+	color: #fff;
+}
