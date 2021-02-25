@@ -52,6 +52,11 @@ body {
 }
 .function_list  li{
 	cursor: pointer;
+	border: 1px solid #4A90E2;
+	border-radius: 4px;
+	list-style-type: none;
+	margin-bottom: 5px;
+	padding: 5px;
 }
 .information {
 	padding: 20px 15px;
@@ -79,7 +84,7 @@ input {
 	border-radius: 4px;
 	font-size: 0.8em;
 }
-.cord_input {
+.cord_input, .dots_input{
 	width: 50px;
 }
 .func_input {
@@ -104,7 +109,8 @@ input {
 }
 .btn {
 	width: 180px;
-	padding: 8%;
+	margin-bottom: 10px;
+	padding: 15px;
 	font-size: 0.8em;
 	border: none;
 	background-color: #fff;

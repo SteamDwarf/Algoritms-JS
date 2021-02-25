@@ -4,9 +4,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const aInput = document.querySelector('[name="a-cordinate"]'),
           bInput = document.querySelector('[name="b-cordinate"]'),
-          btnSimpson = document.querySelector('.btn-Simpson'),
+          btnSimpson = document.querySelector('#btn-Simpson'),
+          btnMonteCarlo = document.querySelector('#btn-MonteCarlo'),
           funcInput = document.querySelector('[name="function-input"]'),
           fragmentInput = document.querySelector('[name="fragmentation-input"]'),
+          dotsInput = document.querySelector('[name="dots-input"]'),
           resOutput = document.querySelector('.res_output'),
           errorOutput = document.querySelector('.error_output'),
           fargmOutput = document.querySelector('.fragm_output'),
@@ -55,7 +57,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 arct: ' Math.atan',
                 arccos: ' Math.acos',
                 arcsin: ' Math.asin',
-                'x': x
+                'x': x,
+                e: Math.E
             };
 
         for(let key in expressions) {
@@ -65,40 +68,38 @@ document.addEventListener("DOMContentLoaded", () => {
         return eval(functionExpression);
     }
 
-    function integralCount() {
+    function setHN(k, fragm) {
+        let h, n;
 
-        function setHN(k, fragm) {
-            let h, n;
-
-            if(fragm === '') {
-                let maxH = 0.001 ** (1/4);
-                n = Math.ceil((b - a) / maxH);
-                n % 2 !== 0 ? ++n : n;
-                n *= k;   
-                h = ((b - a) / n);
-            } else {
-                n = k * fragm;   
-                h = ((b - a) / n);
-            }
-            
-            console.log(h, n);
-            return [h, n];
+        if(fragm === '') {
+            let maxH = 0.001 ** (1/4);
+            n = Math.ceil((b - a) / maxH);
+            n % 2 !== 0 ? ++n : n;
+            n *= k;   
+            h = ((b - a) / n);
+        } else {
+            n = k * fragm;   
+            h = ((b - a) / n);
         }
-        
-        function setXY(n, h) {    
-            cordinatesX = [a];
-            cordinatesY = []; 
-            for(let i = 0; i < n; i++) {
-                cordinatesX.push(cordinatesX[i] + h);
-            }
-        
-            cordinatesX.forEach(x => {
-                cordinatesY.push(funcExpressionReplace(x));
-            });
-        
-            console.log(cordinatesX, cordinatesY);
-            return cordinatesY;
-        } 
+
+        return [h, n];
+    }
+
+    function setXY(n, h) {    
+        cordinatesX = [a];
+        cordinatesY = []; 
+        for(let i = 0; i < n; i++) {
+            cordinatesX.push(cordinatesX[i] + h);
+        }
+    
+        cordinatesX.forEach(x => {
+            cordinatesY.push(funcExpressionReplace(x));
+        });
+
+        return cordinatesY;
+    } 
+
+    function integralSimpsonCount() {
         
         function integral(cordinatesY, h) {
             let amountY = cordinatesY.length,
@@ -122,7 +123,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return integral;
         }
         
-        function Runge() {
+        function getResult() {
             let fragm = fragmentInput.value,
                 h = setHN(1, fragm)[0],
                 n = setHN(1, fragm)[1],
@@ -139,7 +140,108 @@ document.addEventListener("DOMContentLoaded", () => {
             fargmOutput.textContent = n;
         }
         
-        Runge();
+        getResult();
+    }
+
+    function drawDots(funcX, funcY, notfuncX, notfuncY, dots) {
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        const data = new google.visualization.DataTable();
+        let j = 0;
+            
+        data.addColumn('number', 'x');
+        data.addColumn('number', 'yFunc');
+        data.addColumn('number', 'yNotFunc');
+        data.addRows(dots);
+
+        for (let i = 0; i < funcX.length; i++) {
+            data.setCell(j, 0, funcX[i]);
+            data.setCell(j, 1, funcY[i]);
+            j++;
+        }
+        for (let i = 0; i < notfuncX.length; i++) {
+            data.setCell(j, 0, notfuncX[i]);
+            data.setCell(j, 2, notfuncY[i]);
+            j++;
+        }
+
+        var chart = new google.visualization.ScatterChart(document.getElementById('curve_chart'));
+
+        chart.draw(data);
+      }
+    }
+
+    function integralMonteCarloCount(dots) {
+
+        console.log(dots);
+        let fragm = fragmentInput.value,
+            h = setHN(1, fragm)[0],
+            n = setHN(1, fragm)[1],
+            width = Math.abs(b - a),
+            cordinatesYn = setXY(n, h),
+            yMin = Math.min.apply(0, cordinatesYn),
+            yMax = Math.max.apply(0, cordinatesYn),
+            height,
+            square;
+
+            if(yMin >= 0 && yMax > 0) {
+                height = yMax + yMin;
+            } else if(yMax > 0 && yMin < 0) {
+                height = yMax + Math.abs(yMin);
+            } else {
+                height = Math.abs(yMin);
+            }
+            //height = Math.abs(yMax);//Math.abs(yMax - yMin),*/
+            square = width * height;
+        
+        function createRandomDots(yMin, yMax) {
+            let randX = [],
+                randY = [],
+                trueY = [],
+                funcY = [],
+                notfuncY = [],
+                funcX = [], 
+                notfuncX = [];
+
+            for(let i = 0; i < dots; i++) {
+                randX.push(Math.random() * width + a);
+            }
+            for(let i = 0; i < dots; i++) {
+                randY.push(Math.random() * height - Math.abs(yMin));
+            }
+
+            randX.forEach(x => {
+                trueY.push(funcExpressionReplace(x));
+            });
+
+            trueY.forEach((y, i) => {
+                if(y > 0 && randY[i] < y && randY[i] > 0) {
+                    funcY.push(randY[i]);
+                    funcX.push(randX[i]);
+                } else if(y < 0 && randY[i] > y && randY[i] < 0) {
+                    funcY.push(randY[i]);
+                    funcX.push(randX[i]);
+                } else {
+                    notfuncY.push(randY[i]);
+                    notfuncX.push(randX[i]);
+                }
+                //console.log();
+            });
+            
+            let proportion = funcY.length / dots,
+                result = proportion * square;
+
+            resOutput.textContent = result;
+            //console.log(height, square);
+            //console.log(randY, trueY, funcY, notfuncY, result);
+            //console.log(randX, randY, trueY, funcY, notfuncY, proportion);
+
+            drawDots(funcX, funcY, notfuncX, notfuncY, dots);
+        }
+
+        createRandomDots(yMin, yMax);
     }
 
     functionList.addEventListener('click', (e) => {
@@ -152,10 +254,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
         btnSimpson.style.cssText = 'border: solid 2px #4A90E2';
 
-        integralCount();
+        integralSimpsonCount();
         graphDraw();
     });
 
+    btnMonteCarlo.addEventListener('click', () => {
+        a = +aInput.value;
+        b = +bInput.value;
+        integralMonteCarloCount(+dotsInput.value);
+    });
     
 });
 
