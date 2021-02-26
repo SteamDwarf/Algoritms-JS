@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let a, b, cordinatesX, cordinatesY;
 
-    function graphDraw() {
+    function lineDraw() {
 
         google.charts.load('current', {'packages':['corechart']});
         google.charts.setOnLoadCallback(drawChart);
@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return eval(functionExpression);
     }
 
-    function setHN(k, fragm) {
+    function makeFragmentation(k, fragm) {
         let h, n;
 
         if(fragm === '') {
@@ -125,10 +125,10 @@ document.addEventListener("DOMContentLoaded", () => {
         
         function getResult() {
             let fragm = fragmentInput.value,
-                h = setHN(1, fragm)[0],
-                n = setHN(1, fragm)[1],
-                h2 = setHN(2, fragm)[0],
-                n2 = setHN(2, fragm)[1],
+                h = makeFragmentation(1, fragm)[0],
+                n = makeFragmentation(1, fragm)[1],
+                h2 = makeFragmentation(2, fragm)[0],
+                n2 = makeFragmentation(2, fragm)[1],
                 cordinatesYn = setXY(n, h),
                 cordinatesY2n = setXY(n2, h2), 
                 integralSimpsonN = integral(cordinatesYn, h),
@@ -175,16 +175,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function integralMonteCarloCount(dots) {
 
-        console.log(dots);
         let fragm = fragmentInput.value,
-            h = setHN(1, fragm)[0],
-            n = setHN(1, fragm)[1],
+            h = makeFragmentation(1, fragm)[0],
+            n = makeFragmentation(1, fragm)[1],
             width = Math.abs(b - a),
             cordinatesYn = setXY(n, h),
             yMin = Math.min.apply(0, cordinatesYn),
             yMax = Math.max.apply(0, cordinatesYn),
             height,
-            square;
+            square,
+            sumRes = 0,
+            sumSquareRes = 0;
+
 
             if(yMin >= 0 && yMax > 0) {
                 height = yMax + yMin;
@@ -193,10 +195,10 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
                 height = Math.abs(yMin);
             }
-            //height = Math.abs(yMax);//Math.abs(yMax - yMin),*/
+
             square = width * height;
         
-        function createRandomDots(yMin, yMax) {
+        function countIntegral(yMin, yMax) {
             let randX = [],
                 randY = [],
                 trueY = [],
@@ -227,21 +229,30 @@ document.addEventListener("DOMContentLoaded", () => {
                     notfuncY.push(randY[i]);
                     notfuncX.push(randX[i]);
                 }
-                //console.log();
             });
             
             let proportion = funcY.length / dots,
                 result = proportion * square;
 
+            sumRes += result;
+            sumSquareRes += result ** 2;
+
             resOutput.textContent = result;
-            //console.log(height, square);
-            //console.log(randY, trueY, funcY, notfuncY, result);
-            //console.log(randX, randY, trueY, funcY, notfuncY, proportion);
 
             drawDots(funcX, funcY, notfuncX, notfuncY, dots);
         }
 
-        createRandomDots(yMin, yMax);
+        function countErrorMonteCarlo() {
+            for(let i = 0; i < 10; i++) {
+                countIntegral(yMin, yMax);
+            }
+
+            console.log(sumRes**2, sumSquareRes);
+            let error = Math.sqrt((sumSquareRes) / 10  - (sumRes /10) ** 2);
+            errorOutput.textContent = error;
+        }
+
+        countErrorMonteCarlo();
     }
 
     functionList.addEventListener('click', (e) => {
@@ -255,7 +266,7 @@ document.addEventListener("DOMContentLoaded", () => {
         btnSimpson.style.cssText = 'border: solid 2px #4A90E2';
 
         integralSimpsonCount();
-        graphDraw();
+        lineDraw();
     });
 
     btnMonteCarlo.addEventListener('click', () => {
