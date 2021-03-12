@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const aInput = document.querySelector('[name="a-cordinate"]'),
           bInput = document.querySelector('[name="b-cordinate"]'),
+          functionChart = document.querySelector('#curve_chart'),
           btnSimpson = document.querySelector('#btn-Simpson'),
           btnMonteCarlo = document.querySelector('#btn-MonteCarlo'),
           funcInput = document.querySelector('[name="function-input"]'),
@@ -12,9 +13,21 @@ document.addEventListener("DOMContentLoaded", () => {
           resOutput = document.querySelector('.res_output'),
           errorOutput = document.querySelector('.error_output'),
           fargmOutput = document.querySelector('.fragm_output'),
-          functionList = document.querySelector('.function_list');
+          functionList = document.querySelector('.function_list'),
+          modalInstruction = document.querySelector('.modal'),
+          btnInstruction = document.querySelector('#btn-instruction');
 
     let a, b, cordinatesX, cordinatesY;
+
+    function showInstruction() {
+        modalInstruction.style.display = 'block';
+    }
+
+    function closeInstruction(e) {
+        if (e.target === modalInstruction|| e.target.parentNode.className === 'modal_close') {
+            modalInstruction.style.display = 'none';
+        }
+    }
 
     function lineDraw() {
 
@@ -33,13 +46,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 data.setCell(i, 1, cordinatesY[i]);
             }
 
-            var options = {
+            let options = {
             title: 'Интегрирование функции методом Симпсона',
             curveType: 'function',
             legend: 'none'
             }; 
 
-            var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+            let chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
 
             chart.draw(data, options);
         }
@@ -51,28 +64,37 @@ document.addEventListener("DOMContentLoaded", () => {
                 ln: ' Math.log',
                 '\ cos': ' Math.cos',
                 '\ sin': ' Math.sin',
-                tg: ' Math.tan',
+                '\ tg': ' Math.tan',
                 '\\^': '**',
                 sqrt: ' Math.sqrt',
-                arct: ' Math.atan',
+                arctg: ' Math.atan',
                 arccos: ' Math.acos',
                 arcsin: ' Math.asin',
                 'x': x,
-                e: Math.E
+                e: Math.E,
+                pi: Math.PI
             };
 
         for(let key in expressions) {
             let reg = new RegExp(key,'g');
             functionExpression = functionExpression.replace(reg, expressions[key]);
         }
-        return eval(functionExpression);
+        
+        let res;
+        try {
+            res = eval(functionExpression);
+        }catch(e) {
+            res = 'error';
+        } finally {
+            return res;
+        }
     }
 
     function makeFragmentation(k, fragm) {
         let h, n;
 
         if(fragm === '') {
-            let maxH = 0.001 ** (1/4);
+            let maxH = 0.0001 ** (1/4);
             n = Math.ceil((b - a) / maxH);
             n % 2 !== 0 ? ++n : n;
             n *= k;   
@@ -92,15 +114,24 @@ document.addEventListener("DOMContentLoaded", () => {
             cordinatesX.push(cordinatesX[i] + h);
         }
     
-        cordinatesX.forEach(x => {
-            cordinatesY.push(funcExpressionReplace(x));
-        });
-
-        return cordinatesY;
+        if(funcExpressionReplace(1) === 'error') {
+            return 'error';
+        } else {
+            cordinatesX.forEach(x => {
+                cordinatesY.push(funcExpressionReplace(x));
+            });
+    
+            return cordinatesY;
+        }
     } 
 
     function integralSimpsonCount() {
-        
+        let fragm = fragmentInput.value,
+            h = makeFragmentation(1, fragm)[0],
+            n = makeFragmentation(1, fragm)[1],
+            h2 = makeFragmentation(2, fragm)[0],
+            n2 = makeFragmentation(2, fragm)[1];
+
         function integral(cordinatesY, h) {
             let amountY = cordinatesY.length,
                 sumY = 0,
@@ -124,23 +155,29 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         
         function getResult() {
-            let fragm = fragmentInput.value,
-                h = makeFragmentation(1, fragm)[0],
-                n = makeFragmentation(1, fragm)[1],
-                h2 = makeFragmentation(2, fragm)[0],
-                n2 = makeFragmentation(2, fragm)[1],
-                cordinatesYn = setXY(n, h),
+            let cordinatesYn = setXY(n, h),
                 cordinatesY2n = setXY(n2, h2), 
                 integralSimpsonN = integral(cordinatesYn, h),
                 integralSimpson2N = integral(cordinatesY2n, h2),
                 errorRunge = Math.abs(integralSimpson2N - integralSimpsonN) / 15;
-            
+                
             resOutput.textContent = integralSimpsonN;
             errorOutput.textContent = errorRunge;
             fargmOutput.textContent = n;
         }
-        
-        getResult();
+
+        if(setXY(n, h) === 'error') {
+            alert('Вы неправильно ввели функцию, прочтите указания или попробуйте еще раз.');
+
+            functionChart.textContent = '';
+            resOutput.textContent = '';
+            errorOutput.textContent = '';
+            fargmOutput.textContent = '';
+
+        } else {
+            getResult();
+            lineDraw();
+        }
     }
 
     function drawDots(funcX, funcY, notfuncX, notfuncY, dots) {
@@ -167,38 +204,39 @@ document.addEventListener("DOMContentLoaded", () => {
             j++;
         }
 
-        var chart = new google.visualization.ScatterChart(document.getElementById('curve_chart'));
+        let options = {
+            title: 'Интегрирование функции методом Монте-Карло',
+        }; 
 
-        chart.draw(data);
+        let chart = new google.visualization.ScatterChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
       }
     }
 
     function integralMonteCarloCount(dots) {
 
+        if(!dots) {
+            alert('Введите количество точек!');
+
+            functionChart.textContent = '';
+            resOutput.textContent = '';
+            fargmOutput.textContent = '';
+            errorOutput.textContent = '';
+
+            return undefined;
+        }
+
         let fragm = fragmentInput.value,
             h = makeFragmentation(1, fragm)[0],
             n = makeFragmentation(1, fragm)[1],
             width = Math.abs(b - a),
-            cordinatesYn = setXY(n, h),
-            yMin = Math.min.apply(0, cordinatesYn),
-            yMax = Math.max.apply(0, cordinatesYn),
-            height,
+            height, yMin, yMax,
             square,
             sumRes = 0,
             sumSquareRes = 0;
-
-
-            if(yMin >= 0 && yMax > 0) {
-                height = yMax + yMin;
-            } else if(yMax > 0 && yMin < 0) {
-                height = yMax + Math.abs(yMin);
-            } else {
-                height = Math.abs(yMin);
-            }
-
-            square = width * height;
-        
-        function countIntegral(yMin, yMax) {
+              
+        function countIntegral() {
             let randX = [],
                 randY = [],
                 trueY = [],
@@ -244,16 +282,50 @@ document.addEventListener("DOMContentLoaded", () => {
 
         function countErrorMonteCarlo() {
             for(let i = 0; i < 10; i++) {
-                countIntegral(yMin, yMax);
+                countIntegral();
             }
 
-            console.log(sumRes**2, sumSquareRes);
             let error = Math.sqrt((sumSquareRes) / 10  - (sumRes /10) ** 2);
+            fargmOutput.textContent = '';
             errorOutput.textContent = error;
         }
 
-        countErrorMonteCarlo();
+
+        if(setXY(n, h) === 'error') {
+            alert('Вы неправильно ввели функцию, прочтите указания или попробуйте еще раз.');
+
+            functionChart.textContent = '';
+            resOutput.textContent = '';
+            fargmOutput.textContent = '';
+            errorOutput.textContent = '';
+
+        } else {
+            let cordinatesYn = setXY(n, h);
+            yMin = Math.min.apply(0, cordinatesYn);
+            yMax = Math.max.apply(0, cordinatesYn);
+
+            if(yMin >= 0 && yMax > 0) {
+                height = yMax + yMin;
+            } else if(yMax > 0 && yMin < 0) {
+                height = yMax + Math.abs(yMin);
+            } else {
+                height = Math.abs(yMin);
+            }
+
+            square = width * height;
+
+            countErrorMonteCarlo();
+        }
+
     }
+
+    btnInstruction.addEventListener('click', () => {
+        showInstruction();
+    });
+
+    modalInstruction.addEventListener('click', (e) => {
+        closeInstruction(e);
+    });
 
     functionList.addEventListener('click', (e) => {
         funcInput.value = e.target.textContent;
@@ -264,14 +336,18 @@ document.addEventListener("DOMContentLoaded", () => {
         b = +bInput.value;
 
         btnSimpson.style.cssText = 'border: solid 2px #4A90E2';
+        btnMonteCarlo.style.cssText = 'none';
 
         integralSimpsonCount();
-        lineDraw();
     });
 
     btnMonteCarlo.addEventListener('click', () => {
         a = +aInput.value;
         b = +bInput.value;
+
+        btnSimpson.style.cssText = 'none';
+        btnMonteCarlo.style.cssText = 'border: solid 2px #4A90E2';
+
         integralMonteCarloCount(+dotsInput.value);
     });
     
