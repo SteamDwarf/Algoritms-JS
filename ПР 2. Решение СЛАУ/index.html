@@ -16,154 +16,26 @@
                     <div class="matrix_wrapper">
                         <div class="matrix_block" id="source-matrix">
                             <table class="matrix">
-                                <tr class="matrix-row">
-                                    <td class="matrix-cell"><input type="text"></td>
-                                    <td class="matrix-cell"><input type="text"></td>
-                                    <td class="matrix-cell"><input type="text"></td>
-                                    <td class="matrix-cell"><input type="text"></td>
-                                </tr>
-                                <tr class="matrix-row">
-                                    <td class="matrix-cell"><input type="text"></td>
-                                    <td class="matrix-cell"><input type="text"></td>
-                                    <td class="matrix-cell"><input type="text"></td>
-                                    <td class="matrix-cell"><input type="text"></td>
-                                </tr>
-                                <tr class="matrix-row">
-                                    <td class="matrix-cell"><input type="text"></td>
-                                    <td class="matrix-cell"><input type="text"></td>
-                                    <td class="matrix-cell"><input type="text"></td>
-                                    <td class="matrix-cell"><input type="text"></td>
-                                </tr>
+
                             </table>
                         </div>
-                        <button class="btn" id="btn-count">Вычислить</button>
+                        <div class="interactive_block">
+                            <button class="btn" id="btn-count">Вычислить</button>
+                            <button class="btn" id="btn-count-zeydel">Вычислить методом Зейделя</button>
+                            <select name="matrix-size" id="matrix-size">
+                                <option class="matrix-size_option" value="2">Матрица 2:2</option>
+                                <option class="matrix-size_option" value="3">Матрица 3:3</option>
+                                <option class="matrix-size_option" value="4">Матрица 4:4</option>
+                            </select>
+                        </div>
                         <div class="matrix_block" id="tringular-matrix">
                             <table class="matrix">
-                                <tr class="matrix-row">
-                                    <td class="matrix-cell" data-cell="tring"><div></div></td>
-                                    <td class="matrix-cell" data-cell="tring"><div></div></td>
-                                    <td class="matrix-cell" data-cell="tring"><div></div></td>
-                                    <td class="matrix-cell" data-cell="tring"><div></div></td>
-                                    <td class="matrix-cell" data-cell="X"><div></div></td>
-                                </tr>
-                                <tr class="matrix-row">
-                                    <td class="matrix-cell" data-cell="tring"><div></div></td>
-                                    <td class="matrix-cell" data-cell="tring"><div></div></td>
-                                    <td class="matrix-cell" data-cell="tring"><div></div></td>
-                                    <td class="matrix-cell" data-cell="tring"><div></div></td>
-                                    <td class="matrix-cell" data-cell="X"><div></div></td>
-                                </tr>
-                                <tr class="matrix-row">
-                                    <td class="matrix-cell" data-cell="tring"><div></div></td>
-                                    <td class="matrix-cell" data-cell="tring"><div></div></td>
-                                    <td class="matrix-cell" data-cell="tring"><div></div></td>
-                                    <td class="matrix-cell" data-cell="tring"><div></div></td>
-                                    <td class="matrix-cell" data-cell="X"><div></div></td>
-                                </tr>
+                               
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
-<!--             <div class="function-examples_block">
-                <h1>Примеры функций</h1>
-                <ol class="function_list">
-                    <li>ln( x + sqrt( x^2 + 1.21 )) / x^3</li>
-                    <li>( 1 / x^2 ) * arcsin( x / 9 )</li>
-                    <li>x * e^(-x)</li>
-                    <li>sqrt( sin(x) ) * cos(0.5 * x)</li>
-                    <li>1 / (10 + 6 * sin(x + e))</li>
-                    <li>cos(x) / ( x^2 + 1 )</li>
-                    <li>cos(x) / ( sin(x) + ( 1 + sin(x) ))</li>
-                    <li>x^5 / (sqrt(0.36 + x^2))^5</li>
-                    <li>1 / (0.5 * sin(x) + 3 * cos(x))^2</li>
-                </ol>
-                <div class="instruction">
-                    <button class="btn" id="btn-instruction">Указания</button>
-                </div>
-            </div>
-
-            <div class="information">
-
-                <div class="data_input">
-                    <h1>Введите ключевую информацию</h1>
-
-                    <div class="data">
-                        <div class="input-label">
-                            <label for="a-cordinate">Начало отрезка</label>
-                            <input class="cord_input" type="text" name="a-cordinate">  
-                        </div>
-                        <div class="input-label">
-                            <label for="b-cordinate">Конец отрезка</label>
-                            <input class="cord_input" type="text" name="b-cordinate">
-                        </div>
-                        <div class="input-label">
-                            <label for="function-input">Введите функцию</label>
-                            <input type="text" class="func_input" name="function-input">
-                        </div>
-                        <div class="input-label">
-                            <label for="fragmentation-input">Количество разбиений</label>
-                            <input class="fragment_input" type="text"  name="fragmentation-input">
-                        </div>
-                        <div class="input-label">
-                            <label for="dots-input">Количество точек</label>
-                            <input class="dots_input" type="text"  name="dots-input">
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="graph_chart">
-                    <div id="curve_chart"></div>
-                </div>
-
-                <div class="data_output">
-                    <div class="output-elem">
-                        <label>Итоговое количество разбиений</label>
-                        <div class="fragm_output"></div>
-                    </div>
-                    <div class="output-elem">
-                        <label>Результат</label>
-                        <div class="res_output"></div>
-                    </div>
-                    <div class="output-elem">
-                        <label>Погрешность</label>
-                        <div class="error_output"></div>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="btns-bar">
-                <button class="btn" id="btn-Simpson">Расчитать по методу Симпсона</button>
-                <button class="btn" id="btn-MonteCarlo">Расчитать по методу Монте-Карло</button>
-            </div>
-
-        </div>
-
-        <div class="modal" id="modal-form"> 
-            <div class="modal_dialog">
-                <div class="modal_content">
-                    <button type="button" class="modal_close"><strong>&times;</strong></button>
-                    <div class="modal_form">
-                        <h1 class="header-instruction">Указания</h1>
-                        <div class="main-instruction">
-                            <ol>
-                                <li>Десятичные дроби необходимо вводить не через запятую, а через точку</li>
-                                <li>На данный момент программа понимает такие математические константы и методы, как: 
-                                    <span class="math-func">ln, cos, sin, tg, sqrt, arctg, arccos, arcsin, e, pi</span> 
-                                </li>
-                                <li>При вводе своей функции <span class="warn-text">обязательно</span> перед <span class="math-func">tg, cos, sin</span> ставить пробел</li>
-                                <li>При расчете методом Симпсона не обязательно вводить количество разбиений,
-                                    так как был создан метод, который подсчитывал оптимальное количество разбиений
-                                </li>
-                                <li>При расчете методом Монте-Карло <span class="warn-text">обязательно</span> ввести количество точек</li>
-                            </ol>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-
         </div>
 
         <script src="https://www.gstatic.com/charts/loader.js"></script>

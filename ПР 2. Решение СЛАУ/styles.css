@@ -41,214 +41,103 @@ body {
 	font-size: 1em;
 	font-family: 'Roboto', sans-serif;
 }
-.container {
-	padding: 50px;
-}
 .interface {
-	width: 80%;
+	width: 70%;
+	height: 80%;
 	display: flex;
 	justify-content: center;
 	margin: 100px auto;
 	box-shadow: 0 0 10px 5px rgba(221, 221, 221, 1);
+}
+.container {
+	padding: 50px;
 }
 .information {
 	width: 100%;
 }
 .matrix_wrapper {
 	display: flex;
-	justify-content: space-between;
+	justify-content: space-around;
 	align-items: center;
 }
-.btn {
-	height: 20px;
-}
-.matrix_block {
-	width: 500px;
-}
-.matrix {
-	word-wrap:break-word;
-	width: 100%;
-	height: 350px;
-	table-layout:fixed;
-}
-.matrix-cell {
-	width: 100px;
-}
-.matrix-row {
-	width: 100%;
-	height: 33%;
-}
-.matrix-cell input{
- 	width: 100%;
-	height: 100%;
-	text-align: center;
-	overflow: hidden;
-}
-#tringular-matrix .matrix-cell{
-	border: 2px solid rgb(118, 118, 118);
-}
-.matrix-cell div {
-	width: 100%;
-	height: 100%;
-	margin-top: 50%;
-	text-align: center;
-	overflow: hidden;
-}
-
-/* .container {
-	margin: 50px;
-}
-h1 {
-	font-size: 1.3em;
-	padding-bottom: 20px;
-}
-.matrix_wrapper {
-	display: flex;
-	justify-content: space-between;
-}
-.matrix_block {
-	width: 250px;
-}
-.matrix-cell input {
-	width: 100px;
-	height: 100px;
-	text-align: center;
-} */
-
-
-
-/* .data_input {
-	text-align: center;
-}
-
-.data {
-	display: flex;
-	justify-content: space-around;
-	align-items: flex-end;
-}
-.input-label {
-    display: flex;
-    flex-direction: column;
-}
-input {
-	margin: 0 auto;
-	text-align: center;
-	outline: none;
-	border: solid 1px #b3b3b3;
-	border-radius: 4px;
-	font-size: 1em;
-}
-.cord_input, .dots_input, 
-.fragment_input{
-	width: 50px;
-}
-.func_input {
-	width: 250px;
-}
-.graph_chart {
-	margin: 15px 0;
-	border: 2px solid #4A90E2;
-	border-radius: 4px;
-	text-align: center;
-}
-#curve_chart {
-	width: 800px; 
-	height: 500px;
-	margin: 0 auto;
-}
-.data_output {
-	display: flex;
-	justify-content: space-around;
-	text-align: center;
-}
-.output-elem {
+.interactive_block {
 	display: flex;
 	flex-direction: column;
-}
-.btns-bar {
-	width: 10%;
-	padding: 123px 0;
 }
 .btn {
 	width: 180px;
 	margin-bottom: 10px;
 	font-size: 0.9em;
 	padding: 15px;
-	border: none;
+	border: 2px solid #4A90E2;
 	background-color: #fff;
 	outline: none;
 	transition: background-color 0.5s, color 0.5s;
-	box-shadow: 5px 0 10px 5px rgba(221, 221, 221, 1);
 }
 .btn:hover {
 	background-color: #4A90E2;
 	color: #fff;
 }
-
-.modal {
-	display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 9;
-    background-color: rgba(0, 0, 0, 0.5);
-}
-.modal_content {
-    position: fixed;
-    top: 18%;
-    left: 50%;
-    -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
-    width: 40rem;
-    background-color: #ffffff;
-    border-radius: 10px;
-    padding: 15px;
-}
-.modal_close {
-    position: absolute;
-    top: -2.2rem;
-    right: -4rem;
-    font-size: 3rem;
-    color: #ffffff;
-    border: none;
-    background: transparent;
-    outline: none;
-    cursor: pointer;
-}
-.header-instruction {
+#matrix-size {
+	outline: none;
+	padding: 10px 0 10px 45px;
+	border: 2px solid #0bda51;
+	background-color: #fff;
 	text-align: center;
+	font-size: 0.9em;
 }
-.main-instruction {
-	margin-left: 15px;
+.matrix_block {
+	width: 30%;
 }
-.main-instruction li {
-	margin-bottom: 10px;
+.matrix {
+	word-wrap:break-word;
+	width: 400px;
+	height: 350px;
+	table-layout:fixed;
 }
-.math-func {
-	font-style: italic;
+.matrix-cell {
+	border: 2px solid rgb(118, 118, 118);
 }
-.warn-text {
-	text-transform: uppercase;
-	text-decoration: underline;
-} */
+.matrix-row {
+	width: 100%;
+	height: 10%;
+}
+.matrix-cell input{
+ 	width: 100%;
+	height: 100%;
+	text-align: center;
+	font-size: 100%;
+	overflow: hidden;
+	outline: none;
+	border: none;
+}
+.matrix-cell div {
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+	padding-top: 30%;
+	text-align: center;
+	overflow: hidden;
+}
+.cell-result {
+	/* background-color: #87c735; */
+	background-color: #add65a;
+}
 
-/* @media(min-width: 1000px) and (max-width: 1400px){
+@media(min-width: 1000px) and (max-width: 1400px){
 	body {
 		font-size: 0.8em;
 	}
-	.interface {
-		margin: 1% 0 0 9%;
-	}
-	.information{
-		width: 800px;
-	}
-	#curve_chart {
-		width: 600px;
-	}
-	.btn {
-		width: 100px;
+	.btn, #matrix-size {
+		width: 150px;
 		padding: 7px;
 	}
-} */
+	.interface {
+		width: 99%;
+		height: 100%;
+	}
+	.matrix {
+		width: 300px;
+		height: 250px;
+	}
+}
