@@ -6,11 +6,16 @@ document.addEventListener("DOMContentLoaded", () => {
           tringularMatrix = document.querySelector('#tringular-matrix .matrix'), 
           matrixSizeSelect = document.querySelector('#matrix-size'),
           btnCount = document.querySelector('#btn-count'),
-          btnZeydel = document.querySelector('#btn-count-zeydel');
+          btnClear = document.querySelector('#btn-clear'),
+          btnZeydel = document.querySelector('#btn-count-zeydel'),
+          resZeydel = document.querySelector('.zeydel-res');
 
     let matrixCellInput, matrixCellTring, rows, columns, 
+        eps = 0.0001,
         prevApproximateX = [],
-        nextApproximateX = [];
+        nextApproximateX = [],
+        diffApproximate = [],
+        count;
 
     function createGrid() {
         let size = +matrixSizeSelect.value;
@@ -63,12 +68,11 @@ document.addEventListener("DOMContentLoaded", () => {
         columns = size + 1;
         matrixCellInput = sourceMatrix.querySelectorAll('.matrix-cell input');
         matrixCellTring = tringularMatrix.querySelectorAll('.matrix-cell div');
-
     }
 
     function createApproximate() {
         for(let i = 0; i < rows; i++) {
-            prevApproximateX.push(0);
+            prevApproximateX[i] = 0;
         }
     }
 
@@ -87,11 +91,17 @@ document.addEventListener("DOMContentLoaded", () => {
                     }    
                 }
             }
-        
+
         if(+matrixValues[0][0] === 0) {
-            matrixValues = matrixValues.reverse();
+            matrixValues.forEach((row, i) => {
+                if(+row[0] !== 0) {
+                    let firstRow = matrixValues[0];
+                    matrixValues[0] = row;
+                    matrixValues[i] = firstRow;
+                }
+            });
         }
-        console.log(matrixValues);
+
         return matrixValues;
     }
 
@@ -137,18 +147,36 @@ document.addEventListener("DOMContentLoaded", () => {
         equations.forEach((eq, i) => {
             for(let j = 0; j < rows; j++) {
                 if(i !== j) {
-                    let reg = new RegExp(`x${j+1}`);
-                    equations[i] = eq.replace(reg, prevApproximateX[j]);
-                    console.log(eq);
+                    if(i === 0 || i < j) {
+                        let reg = new RegExp(`x${j+1}`);
+                        eq = eq.replace(reg, prevApproximateX[j]);
+    
+                    } else {
+                        let reg = new RegExp(`x${j+1}`);
+                        eq = eq.replace(reg, nextApproximateX[j]);
+                    }
                 }
             }
-            
-            //nextApproximateX.push(eval(equations[i])); 
+            nextApproximateX[i] = eval(eq).toFixed(7); 
         });
+
+        for(let i = 0; i < rows; i++) {
+            diffApproximate[i] = Math.abs(prevApproximateX[i] - nextApproximateX[i]);
+        }
+
+        let maxDiff = Math.max.apply(0, diffApproximate);
+
+        nextApproximateX.forEach((num, i) => {
+            prevApproximateX[i] = num;
+        });
+
+        return maxDiff;
     }
 
     function reducingEquations(values) {
-        let equations = [];
+        let equations = [],
+            maxDiff;
+        count = 0;
 
         for(let i = 0; i < rows; i++) {
             let x = values[i][columns - 1],
@@ -161,65 +189,40 @@ document.addEventListener("DOMContentLoaded", () => {
                    x = x;
                 }
                 else {
-                    x += `${-num}*x${j + 1}`;
+                    x += `+${-num}*x${j + 1}`;
                 }
             });
 
             x = `(${x}) / ${divider}`;
             equations.push(x);
         }
-
-        xInsertion(equations);
+ 
+        do {
+           ++count;
+           maxDiff = xInsertion(equations);
+        }while (maxDiff > eps);
     }
 
-    function findX(values) {
-        let arrayX = [];
-
-        for(let i = 0; i < rows; i++) {
-            arrayX.push(values[i][columns - 1]);
-        }
-            
-        /* for(let i = rows; i > 0; i--) {
-            let row = values[i - 1],
-                b = row[columns - 1],
-                arrayNums = [],
-                tempNum = b;
-            //console.log('строка:' + i);
-            //console.log(b);
-
-            if(i === rows) {
-                let preLastNum = row[columns - 2],
-                    lastX = b / preLastNum;
-                arrayX.unshift(lastX);
-
-                //console.log('x3:' + lastX);
-
-            }else {
-
-                for(let j = rows - i; j > 0; j--) {
-                    let numX = row[columns - (j + 1)],
-                        numMulX = numX * arrayX[arrayX.length - j];
-                    arrayNums.unshift(numMulX);
-
-                    //console.log('коэффициентX:' + (j + 1));
-                }
-
-                //console.log('умноженные числа:' + arrayNums);
-
-                arrayNums.forEach(num => {
-                    tempNum -= num;
-                    //console.log('временное число:' + tempNum);
-                });
     
-                arrayX.unshift(tempNum);
 
-                //console.log('x' + i + arrayX);
-            }
-        }
+    function setValuesZeydel() {
+        let countBlock = document.createElement('div');
+        resZeydel.textContent = '';
 
-        //console.log('корни уравнения:' + arrayX); */
+        nextApproximateX.forEach((root, i) => {
+            let resultBlock = document.createElement('div'),
+                rootsSpan = document.createElement('span'),
+                resultSpan = document.createElement('span');
 
-        return arrayX;
+            rootsSpan.insertAdjacentHTML('beforeend', `x<sub>${i + 1}</sub> = `);
+            resultSpan.textContent = root;
+
+            resultBlock.append(rootsSpan);
+            resultBlock.append(resultSpan);
+            resZeydel.append(resultBlock);
+        });
+        countBlock.textContent = `Количество итераций: ${count}`;
+        resZeydel.append(countBlock);
     }
 
     function setValues(cellsTring, valuesTring, row, col) {
@@ -239,6 +242,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     matrixSizeSelect.addEventListener('change', () => {
         createGrid();
+        resZeydel.textContent = '';
     });
 
     btnCount.addEventListener('click', () => {
@@ -246,10 +250,16 @@ document.addEventListener("DOMContentLoaded", () => {
         setValues(matrixCellTring, newMatrixValue, rows, columns);
     });
 
+    btnClear.addEventListener('click', () => {
+        createGrid();
+        resZeydel.textContent = '';
+    });
+
     btnZeydel.addEventListener('click', () => {
        let matrixValue = getValues();
        createApproximate();
        reducingEquations(matrixValue);
+       setValuesZeydel();
     });
     
 });
