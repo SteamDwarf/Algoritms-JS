@@ -143,36 +143,6 @@ document.addEventListener("DOMContentLoaded", () => {
         return matrixValues;
     }
 
-    function xInsertion(equations) {
-        equations.forEach((eq, i) => {
-            for(let j = 0; j < rows; j++) {
-                if(i !== j) {
-                    if(i === 0 || i < j) {
-                        let reg = new RegExp(`x${j+1}`);
-                        eq = eq.replace(reg, prevApproximateX[j]);
-    
-                    } else {
-                        let reg = new RegExp(`x${j+1}`);
-                        eq = eq.replace(reg, nextApproximateX[j]);
-                    }
-                }
-            }
-            nextApproximateX[i] = eval(eq).toFixed(7); 
-        });
-
-        for(let i = 0; i < rows; i++) {
-            diffApproximate[i] = Math.abs(prevApproximateX[i] - nextApproximateX[i]);
-        }
-
-        let maxDiff = Math.max.apply(0, diffApproximate);
-
-        nextApproximateX.forEach((num, i) => {
-            prevApproximateX[i] = num;
-        });
-
-        return maxDiff;
-    }
-
     function reducingEquations(values) {
         let equations = [],
             maxDiff;
@@ -203,7 +173,35 @@ document.addEventListener("DOMContentLoaded", () => {
         }while (maxDiff > eps);
     }
 
+    function xInsertion(equations) {
+        equations.forEach((eq, i) => {
+            for(let j = 0; j < rows; j++) {
+                if(i !== j) {
+                    if(i === 0 || i < j) {
+                        let reg = new RegExp(`x${j+1}`);
+                        eq = eq.replace(reg, prevApproximateX[j]);
     
+                    } else {
+                        let reg = new RegExp(`x${j+1}`);
+                        eq = eq.replace(reg, nextApproximateX[j]);
+                    }
+                }
+            }
+            nextApproximateX[i] = eval(eq).toFixed(7); 
+        });
+
+        for(let i = 0; i < rows; i++) {
+            diffApproximate[i] = Math.abs(prevApproximateX[i] - nextApproximateX[i]);
+        }
+
+        let maxDiff = Math.max.apply(0, diffApproximate);
+
+        nextApproximateX.forEach((num, i) => {
+            prevApproximateX[i] = num;
+        });
+
+        return maxDiff;
+    }
 
     function setValuesZeydel() {
         let countBlock = document.createElement('div');

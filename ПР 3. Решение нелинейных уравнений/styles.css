@@ -60,6 +60,13 @@ h3 {
 .information {
 	width: 100%;
 }
+/* .curve_chart {
+	width: 200px;
+	height: 200px;
+} */
+
+
+
 .matrix_wrapper {
 	display: flex;
 	justify-content: space-around;
