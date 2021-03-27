@@ -11,13 +11,125 @@
     <body>
         <div class="interface">
 
-            <div class="information">
-                <div class="container">
-                    <div class="graph_chart">
-                        <div id="curve_chart"></div>
-                    </div>    
+            <div class="function-examples_block">
+                <h1>Примеры функций</h1>
+                <ol class="function_list">
+                    <li>ln( x + sqrt( x^2 + 1.21 )) / x^3</li>
+                    <li>( 1 / x^2 ) * arcsin( x / 9 )</li>
+                    <li>x * e^(-x)</li>
+                    <li>sqrt( sin(x) ) * cos(0.5 * x)</li>
+                    <li>1 / (10 + 6 * sin(x + e))</li>
+                    <li>cos(x) / ( x^2 + 1 )</li>
+                    <li>cos(x) / ( sin(x) + ( 1 + sin(x) ))</li>
+                    <li>x^5 / (sqrt(0.36 + x^2))^5</li>
+                    <li>1 / (0.5 * sin(x) + 3 * cos(x))^2</li>
+                </ol>
+                <div class="instruction">
+                    <button class="btn" id="btn-instruction">Указания</button>
                 </div>
             </div>
+
+            <div class="information">
+
+                <div class="data_input">
+                    <h1>Введите ключевую информацию</h1>
+
+                    <div class="data">
+                        <div class="input-label">
+                            <label for="a-cordinate">Начало отрезка</label>
+                            <input class="cord_input" type="text" name="a-cordinate">  
+                        </div>
+                        <div class="input-label">
+                            <label for="b-cordinate">Конец отрезка</label>
+                            <input class="cord_input" type="text" name="b-cordinate">
+                        </div>
+                        <div class="input-label">
+                            <label for="function-input">Выбранная функция</label>
+                            <div class="func_input"></div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="graph_chart">
+                    <div id="curve_chart"></div>
+                </div>
+
+                <div class="data_output">
+                    <div class="output-elem">
+                        <label>Количество итераций</label>
+                        <div class="iteration_output"></div>
+                    </div>
+                    <div class="output-elem">
+                        <label>Результат</label>
+                        <div class="res_output"></div>
+                    </div>
+                    <div class="output-elem">
+                        <label>Погрешность</label>
+                        <div class="error_output"></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="btns-bar">
+                <button class="btn" id="Nuton_btn">Расчитать методом Ньютона</button>
+                <button class="btn" id="Dichotomy_btn">Расчитать методом дихотомии</button>
+            </div>
+
+        </div>
+
+        <div class="modal" id="modal-form"> 
+            <div class="modal_dialog">
+                <div class="modal_content">
+                    <button type="button" class="modal_close"><strong>&times;</strong></button>
+                    <div class="modal_form">
+                        <h1 class="header-instruction">Указания</h1>
+                        <div class="main-instruction">
+                            <ol>
+                                <li>Десятичные дроби необходимо вводить не через запятую, а через точку</li>
+                                <li>На данный момент программа понимает такие математические константы и методы, как: 
+                                    <span class="math-func">ln, cos, sin, tg, sqrt, arctg, arccos, arcsin, e, pi</span> 
+                                </li>
+                                <li>При вводе своей функции <span class="warn-text">обязательно</span> перед <span class="math-func">tg, cos, sin</span> ставить пробел</li>
+                                <li>При расчете методом Симпсона не обязательно вводить количество разбиений,
+                                    так как был создан метод, который подсчитывал оптимальное количество разбиений
+                                </li>
+                                <li>При расчете методом Монте-Карло <span class="warn-text">обязательно</span> ввести количество точек</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="information">
+                <div class="container">
+                    <div class="data_block">
+                        <div class="input_block">
+                            <div class="input-label">
+                                <label for="a-cordinate">a</label>
+                                <input class="cord_input" type="text" name="a-cordinate">  
+                            </div>
+                            <div class="input-label">
+                                <label for="b-cordinate">b</label>
+                                <input class="cord_input" type="text" name="b-cordinate">  
+                            </div>
+                        </div>
+                        <div class="graph_chart">
+                            <div id="curve_chart"></div>
+                        </div>
+                        <div class="output_block">
+                            <span data-output="x-cordinate"></span>
+                            <span data-output="y-cordinate"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="buttons_block">
+                <button class="btn" id="Nuton_btn">Рассчитать методом Ньютона</button>
+                <button class="btn" id="Dichotomy_btn">Рассчитать методом дихотомии</button>
+            </div> -->
+
         </div>
 
         <script src="https://www.gstatic.com/charts/loader.js"></script>
