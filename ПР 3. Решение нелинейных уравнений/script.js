@@ -1,8 +1,10 @@
 "use strict"
 
 document.addEventListener("DOMContentLoaded", () => {
-    const aInput = document.querySelector('[name="a-cordinate"]'),
+    const functionElements = document.querySelectorAll('.function_list li'),
+          aInput = document.querySelector('[name="a-cordinate"]'),
           bInput = document.querySelector('[name="b-cordinate"]'),
+          funcInput = document.querySelector('.func_input'),
           outputBlock = document.querySelector('.output_block'),
           btnCountNuton = document.querySelector('#Nuton_btn'),
           btnCountDichotomy = document.querySelector('#Dichotomy_btn'),
@@ -18,7 +20,10 @@ document.addEventListener("DOMContentLoaded", () => {
         xApproximateCordinates = [],
         yApproximateCordinates = [],
         x, y, yDeriv,
-        k = 0,   
+        k = 0,
+        expression,
+        derivativeFirst,
+        derivativeSecond,
 /*         expression4 = '3*x*Math.sin(x)-1',
         derivativeFirst4 = '3*Math.sin(x) + 3*x*Math.cos(x)'; */
 /*         expression4 = 'x**3+4*x-3', //Это работает
@@ -30,6 +35,22 @@ document.addEventListener("DOMContentLoaded", () => {
 /*         expression4 = '2**x-2*(x**2)+1',
         derivativeFirst4 = '2**x*Math.log(2)-4*x'; */
        /*  expression3 = 'x*2**x-1'; */
+
+    const expressions = {
+        '3xsin(x) - 1': {
+            exp: '3*x*Math.sin(x)-1',
+            deriv: '3*Math.sin(x) + 3*x*Math.cos(x)',
+            derivSecond: '3*(2*Math.cos(x) - x*Math.sin(x))'
+        },
+        '2x^2 - 7x + 2': {
+            exp: '2*(x**2)-7*x+2',
+            deriv: '4*x-7'
+        },
+        '2^x - 2x^2 + 1': {
+            exp: '2**x-2*(x**2)+1',
+            deriv: '2**x*Math.log(2)-4*x'
+        }
+    };
 
     function lineDraw() {
 
@@ -49,7 +70,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             let options = {
-            title: 'Интегрирование функции методом Симпсона',
             curveType: 'function',
             legend: 'none'
             }; 
@@ -58,6 +78,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
             chart.draw(data, options);
         }
+    }
+
+    function expressionChoose() {
+        let chosenFunction = funcInput.textContent;
+
+        for(let key in expressions) {
+            if(chosenFunction === key) {
+                expression = expressions[key].exp;
+                derivativeFirst = expressions[key].deriv;
+                derivativeSecond = expressions[key].derivSecond;
+            }
+        }
+
+        console.log(expression, derivativeFirst);
     }
 
     function refresh() {
@@ -72,7 +106,10 @@ document.addEventListener("DOMContentLoaded", () => {
         yApproximateCordinates = [];
         x = null;
         y = null; 
-        yDeriv = null;   
+        yDeriv = null;
+        resOutput.textContent = '';
+        iterationOutput.textContent = '';
+        errorOutput.textContent = ''; 
     }
 
     function createChartCordinates() {
@@ -82,7 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         xCordinatesChart.forEach(num => {
             x = num;
-            let y = eval(expression4);
+            let y = eval(expression);
             yCordinatesChart.push(y);
         //console.log(xCordinatesChart); 
         });
@@ -119,21 +156,33 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function createAproximateCordinates(i) {
-        x = xApproximateCordinates[i];
+        xApproximateCordinates.forEach((num, i) => {
+            x = num;
+            yDeriv = eval(derivativeSecond);
+            if(yDeriv * yApproximateCordinates[i] > 0) {
+                y = yApproximateCordinates[i];
+                yDeriv = eval(derivativeFirst);
+            } 
+        });
+        /* x = xApproximateCordinates[i];
         y = yApproximateCordinates[i];
-        yDeriv = eval(derivativeFirst4);
-        console.log(x, y, yDeriv);
+        yDeriv = eval(derivativeFirst);
+        console.log(x, y, yDeriv); */
     }
 
     function iterationNuton() { 
         do {
             let newX = x - y / yDeriv;
             x = newX;
-            y = eval(expression4);
-            yDeriv = eval(derivativeFirst4);
+            y = eval(expression);
+            yDeriv = eval(derivativeFirst);
             k++;
         } while(Math.abs(y) > eps);
         //console.log(x, y, yDeriv);
+        let rootElem = document.createElement('div');
+        rootElem.textContent = x;
+        resOutput.append(rootElem);
+        console.log(k);
     }
 
     function methodNuton() {
@@ -141,17 +190,19 @@ document.addEventListener("DOMContentLoaded", () => {
         b = +bInput.value;
         createCordinates();
         findingApproximate();
-        xApproximateCordinates.forEach((num, i) => {
+        createAproximateCordinates();
+        iterationNuton();
+        /* xApproximateCordinates.forEach((num, i) => {
             createAproximateCordinates(i);
             iterationNuton();
-        });
+        }); */
     }
 
 
     function makeSegmentation(yArray) {
         let c = (a + b) / 2;
         x = c;
-        y = eval(expression4);
+        y = eval(expression);
 
         if(yArray[0] * y > 0) {
             a = x;
@@ -174,11 +225,18 @@ document.addEventListener("DOMContentLoaded", () => {
         }while(Math.abs(y) > eps);
     }
 
+    functionElements.forEach(element => {
+        element.addEventListener('click', ()=> {
+            funcInput.textContent = element.textContent;
+            expressionChoose();
+        });
+    });
+
     btnCountNuton.addEventListener('click', () => {
         refresh();
         methodNuton();
         iterationOutput.textContent = k;
-        resOutput.textContent = x;
+        //resOutput.textContent = x;
         errorOutput.textContent = y;
     });
 
