@@ -23,15 +23,15 @@ document.addEventListener("DOMContentLoaded", () => {
         k = 0,
         expression,
         derivativeFirst,
-        derivativeSecond,
+        derivativeSecond;
 /*         expression4 = '3*x*Math.sin(x)-1',
         derivativeFirst4 = '3*Math.sin(x) + 3*x*Math.cos(x)'; */
 /*         expression4 = 'x**3+4*x-3', //Это работает
         derivativeFirst4 = '4*x-7',
         derivativeSecond4 = '4'; */
-        expression4 = '2*(x**2)-7*x+2',
+/*         expression4 = '2*(x**2)-7*x+2',
         derivativeFirst4 = '4*x-7',
-        derivativeSecond4 = '4';
+        derivativeSecond4 = '4'; */
 /*         expression4 = '2**x-2*(x**2)+1',
         derivativeFirst4 = '2**x*Math.log(2)-4*x'; */
        /*  expression3 = 'x*2**x-1'; */
@@ -44,11 +44,13 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         '2x^2 - 7x + 2': {
             exp: '2*(x**2)-7*x+2',
-            deriv: '4*x-7'
+            deriv: '4*x-7',
+            derivSecond: '4'
         },
         '2^x - 2x^2 + 1': {
             exp: '2**x-2*(x**2)+1',
-            deriv: '2**x*Math.log(2)-4*x'
+            deriv: '2**x*Math.log(2)-4*x',
+            derivSecond: '(Math.log(2))**2*2**x-4'
         }
     };
 
@@ -156,14 +158,25 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function createAproximateCordinates(i) {
-        xApproximateCordinates.forEach((num, i) => {
+        x = xCordinatesChart[0];
+        yDeriv = eval(derivativeSecond);
+
+        if(yDeriv * yCordinatesChart[0] > 0) {
+            y = yCordinatesChart[0];
+            yDeriv = eval(derivativeFirst);
+        } else {
+            x = xCordinatesChart[xCordinatesChart.length - 1];
+            y = yCordinatesChart[xCordinatesChart.length - 1];
+            yDeriv = eval(derivativeFirst);
+        }
+        /* xApproximateCordinates.forEach((num, i) => {
             x = num;
             yDeriv = eval(derivativeSecond);
             if(yDeriv * yApproximateCordinates[i] > 0) {
                 y = yApproximateCordinates[i];
                 yDeriv = eval(derivativeFirst);
             } 
-        });
+        }); */
         /* x = xApproximateCordinates[i];
         y = yApproximateCordinates[i];
         yDeriv = eval(derivativeFirst);
@@ -189,7 +202,7 @@ document.addEventListener("DOMContentLoaded", () => {
         a = +aInput.value;
         b = +bInput.value;
         createCordinates();
-        findingApproximate();
+        //findingApproximate();
         createAproximateCordinates();
         iterationNuton();
         /* xApproximateCordinates.forEach((num, i) => {
@@ -222,6 +235,10 @@ document.addEventListener("DOMContentLoaded", () => {
         do {
             makeSegmentation(ySegment);
             k++;
+            if(k > 100) {
+                alert('В этом промежутке нет корней');
+                break;
+            }
         }while(Math.abs(y) > eps);
     }
 
