@@ -160,7 +160,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    function iterationNuton() { 
+    function iterationNewton() { 
         do {
             let newX = x - y / yDeriv;
             x = newX;
@@ -174,12 +174,12 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log(k);
     }
 
-    function methodNuton() {
+    function methodNewton() {
         a = +aInput.value;
         b = +bInput.value;
         createCordinates();
         createAproximateCordinates();
-        iterationNuton();
+        iterationNewton();
     }
 
 
@@ -222,7 +222,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     btnCountNuton.addEventListener('click', () => {
         refresh();
-        methodNuton();
+        methodNewton();
         iterationOutput.textContent = k;
         //resOutput.textContent = x;
         errorOutput.textContent = y;
