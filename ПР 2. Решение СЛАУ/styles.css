@@ -141,7 +141,7 @@ h3 {
 	overflow-y: scroll;
 }
 
-@media(min-width: 1000px) and (max-width: 1600px){
+@media(min-width: 1000px) and (max-width: 1750px){
 	body {
 		font-size: 0.8em;
 	}
@@ -150,7 +150,7 @@ h3 {
 		padding: 7px;
 	}
 	.interface {
-		width: 99%;
+		width: 90%;
 		height: 100%;
 	}
 	.matrix {
