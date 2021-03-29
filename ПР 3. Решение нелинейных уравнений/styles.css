@@ -61,17 +61,9 @@ h3 {
 }
 .NJ_block {
 	display: none;
-	height: 500px;
 }
 .NJ_block .information .data_input{
-	margin-bottom: 300px;
-}
-.container {
-	padding: 50px;
-	display: flex;
-	flex-direction: column;
-	width: 100%;
-	height: 100%;
+	margin-bottom: 100px;
 }
 
 .function-examples_block {
@@ -82,6 +74,14 @@ h3 {
 	padding: 20px;
 	box-shadow: -5px 0 10px 5px rgba(221, 221, 221, 1);
 	border-right: solid 5px #b3b3b3;
+}
+.system-function_list {
+	text-align: center;
+	margin-bottom: 20px;
+}
+.function_block_wrapper {
+	display: flex;
+	justify-content: center;
 }
 .function_list  li{
 	width: 100%;
@@ -95,7 +95,16 @@ h3 {
 .function-system {
 	display: flex;
 	align-items: center;
-	/* justify-content: center; */
+	width: 200px;
+	cursor: pointer;
+	border: 1px solid #4A90E2;
+	border-radius: 4px;
+	list-style-type: none;
+	margin: 5px 15px;
+	padding: 5px;
+}
+.selected-func-system {
+	transform: scale(1.2);
 }
 .function-bracket {
 	margin-right: 15px;
@@ -112,9 +121,9 @@ h3 {
 }
 
 
-
 .information {
-	width: 100%;
+	width: 900px;
+	padding: 20px 15px;
 	height: 100%; 
 	box-shadow: 0 0 10px 5px rgba(221, 221, 221, 1);
 }
@@ -147,9 +156,6 @@ input {
 	width: 100%;
 	height: 100%;
 }
-/* .buttons_block {
-	
-} */
 .btn {
 	width: 180px;
 	margin-bottom: 10px;
@@ -177,22 +183,6 @@ input {
 }
 
 
-
-
-
-.instruction {
-	margin-top: 50px;
-}
-.instruction .btn {
-	box-shadow: none;
-	border: 2px solid #4A90E2;
-}
-
-.information {
-	width: 900px;
-	padding: 20px 15px;
-    box-shadow: 0 0 10px 5px rgba(221, 221, 221, 1);
-}
 .data_input {
 	text-align: center;
 }
@@ -256,54 +246,6 @@ input {
 	padding: 123px 0;
 }
 
-.modal {
-	display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 9;
-    background-color: rgba(0, 0, 0, 0.5);
-}
-.modal_content {
-    position: fixed;
-    top: 18%;
-    left: 50%;
-    -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
-    width: 40rem;
-    background-color: #ffffff;
-    border-radius: 10px;
-    padding: 15px;
-}
-.modal_close {
-    position: absolute;
-    top: -2.2rem;
-    right: -4rem;
-    font-size: 3rem;
-    color: #ffffff;
-    border: none;
-    background: transparent;
-    outline: none;
-    cursor: pointer;
-}
-.header-instruction {
-	text-align: center;
-}
-.main-instruction {
-	margin-left: 15px;
-}
-.main-instruction li {
-	margin-bottom: 10px;
-}
-.math-func {
-	font-style: italic;
-}
-.warn-text {
-	text-transform: uppercase;
-	text-decoration: underline;
-}
 
 @media(min-width: 1000px) and (max-width: 1400px){
 	body {

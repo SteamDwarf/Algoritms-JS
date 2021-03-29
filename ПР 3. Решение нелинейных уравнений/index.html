@@ -19,9 +19,6 @@
                         <li>2x^2 - 7x + 2</li>
                         <li>2^x - 2x^2 + 1</li>
                     </ol>
-                    <div class="instruction">
-                        <button class="btn" id="btn-instruction">Указания</button>
-                    </div>
                 </div>
     
                 <div class="information">
@@ -74,56 +71,29 @@
     
             </div>
     
-            <div class="modal" id="modal-form"> 
-                <div class="modal_dialog">
-                    <div class="modal_content">
-                        <button type="button" class="modal_close"><strong>&times;</strong></button>
-                        <div class="modal_form">
-                            <h1 class="header-instruction">Указания</h1>
-                            <div class="main-instruction">
-                                <ol>
-                                    <li>Десятичные дроби необходимо вводить не через запятую, а через точку</li>
-                                    <li>На данный момент программа понимает такие математические константы и методы, как: 
-                                        <span class="math-func">ln, cos, sin, tg, sqrt, arctg, arccos, arcsin, e, pi</span> 
-                                    </li>
-                                    <li>При вводе своей функции <span class="warn-text">обязательно</span> перед <span class="math-func">tg, cos, sin</span> ставить пробел</li>
-                                    <li>При расчете методом Симпсона не обязательно вводить количество разбиений,
-                                        так как был создан метод, который подсчитывал оптимальное количество разбиений
-                                    </li>
-                                    <li>При расчете методом Монте-Карло <span class="warn-text">обязательно</span> ввести количество точек</li>
-                                </ol>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <div class="NJ_block">
-                <div class="function-examples_block">
-                    <h1>Примеры функций</h1>
-                    <ol class="function_list">
-                        <li class="function-system" data-function="firstSystem">
-                            <div class="function-bracket">&lbrace;</div>
-                            <div class="function_block" data-function="firstSystem">
-                                <div class="function-expression">sin(y + 2) - x = 1.5</div>
-                                <div class="function-expression">y + cos(x - 2) = 0.5</div>
-                            </div>
-                        </li>
-                        <li class="function-system" data-function="secondSystem">
-                            <div class="function-bracket">&lbrace;</div>
-                            <div class="function_block" data-function="secondSystem">
-                                <div class="function-expression">sin(x + y) - 1.2x = 0.2</div>
-                                <div class="function-expression">x^2 + y^2 = 1</div>
-                            </div>
-                        </li>
+    
+                <div class="information">   
+                    <ol class="system-function_list">
+                        <h1>Выберите систему уравнений</h1>
+                        <div class="function_block_wrapper">
+                            <li class="function-system" data-function="firstSystem">
+                                <div class="function-bracket">&lbrace;</div>
+                                <div class="function_block" data-function="firstSystem">
+                                    <div class="function-expression">sin(y + 2) - x = 1.5</div>
+                                    <div class="function-expression">y + cos(x - 2) = 0.5</div>
+                                </div>
+                            </li>
+                            <li class="function-system" data-function="secondSystem">
+                                <div class="function-bracket">&lbrace;</div>
+                                <div class="function_block" data-function="secondSystem">
+                                    <div class="function-expression">sin(x + y) - 1.2x = 0.2</div>
+                                    <div class="function-expression">x^2 + y^2 = 1</div>
+                                </div>
+                            </li>
+                        </div>
+                        
                     </ol>
-                    <div class="instruction">
-                        <button class="btn" id="btn-instruction">Указания</button>
-                    </div>
-                </div>
-    
-                <div class="information">
-    
                     <div class="data_input">
                         <h1>Введите ключевую информацию</h1>
     
@@ -135,10 +105,6 @@
                             <div class="input-label">
                                 <label for="y-approximate">Начальное приближение Y</label>
                                 <input class="cord_input" type="text" name="y-approximate">
-                            </div>
-                            <div class="input-label">
-                                <label for="function-input">Выбранная функция</label>
-                                <div class="func_input"></div>
                             </div>
                         </div>
                     </div>
@@ -152,10 +118,6 @@
                             <label>Результат</label>
                             <div class="res_output"></div>
                         </div>
-                        <div class="output-elem">
-                            <label>Погрешность</label>
-                            <div class="error_output"></div>
-                        </div>
                     </div>
     
                 </div>
@@ -164,30 +126,6 @@
                     <button class="btn" id="btn-count">Расчитать методом Ньютона-Рафсона</button>
                 </div>
     
-            </div>
-    
-            <div class="modal" id="modal-form"> 
-                <div class="modal_dialog">
-                    <div class="modal_content">
-                        <button type="button" class="modal_close"><strong>&times;</strong></button>
-                        <div class="modal_form">
-                            <h1 class="header-instruction">Указания</h1>
-                            <div class="main-instruction">
-                                <ol>
-                                    <li>Десятичные дроби необходимо вводить не через запятую, а через точку</li>
-                                    <li>На данный момент программа понимает такие математические константы и методы, как: 
-                                        <span class="math-func">ln, cos, sin, tg, sqrt, arctg, arccos, arcsin, e, pi</span> 
-                                    </li>
-                                    <li>При вводе своей функции <span class="warn-text">обязательно</span> перед <span class="math-func">tg, cos, sin</span> ставить пробел</li>
-                                    <li>При расчете методом Симпсона не обязательно вводить количество разбиений,
-                                        так как был создан метод, который подсчитывал оптимальное количество разбиений
-                                    </li>
-                                    <li>При расчете методом Монте-Карло <span class="warn-text">обязательно</span> ввести количество точек</li>
-                                </ol>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
             
             <div class="btn-programms_block">

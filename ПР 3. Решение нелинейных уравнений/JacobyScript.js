@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         secondSystem: {
             firstEq: {
-                exp: 'Math.sin(x + y) - 1.2*x - 0.2',
+                exp: 'Math.sin(x + y) - 1.2 * x - 0.2',
                 derivX: 'Math.cos(x + y) - 1.2',
                 derivY: 'Math.cos(y + x)'
             },
@@ -33,30 +33,49 @@ document.addEventListener("DOMContentLoaded", () => {
           btnCount = document.querySelector('#btn-count'),
           inputApproximateX = document.querySelector('[name="x-approximate"]'),
           inputApproximateY = document.querySelector('[name="y-approximate"]'),
-          resOutput = document.querySelector('.NJ_block .res_output');
+          resOutput = document.querySelector('.NJ_block .res_output'),
+          iterationOutput = document.querySelector('.NJ_block .iteration_output');
 
-    let x, y, eps = 0.0001,
+    let x, y, k = 0, eps = 0.0001,
         rows = 2, columns = 3,
         matrixJacoby = [[], []],
         matrixF = [],
         systemName;
 
+    function refresh() {
+        k = 0;   
+        matrixJacoby = [[], []];
+        matrixF = [];
+        resOutput.textContent = '';
+        iterationOutput.textContent = '';
+    }
+
+    function deactiveSystem() {
+        functionSystemExamples.forEach(funcSyst => {
+            funcSyst.classList.remove('selected-func-system');
+        });
+    }
+
     function systemSelection(e) {
-        let targetFunc = e.target;
+        deactiveSystem();
+
+        let targetFunc = e.target,
+            systemBlock;
         if(targetFunc.getAttribute('data-function')) {
             systemName = targetFunc.getAttribute('data-function');
         } else {
             systemName = targetFunc.parentNode.getAttribute('data-function');
         }
 
-        console.log(systemName);
+        systemBlock = document.querySelector(`[data-function="${systemName}"]`);
+        systemBlock.classList.add('selected-func-system');
+        console.log(systemBlock);
     }
 
 
     function matrixJacobyFilling() {
         let eqNum = 'firstEq';
         matrixJacoby.forEach(row => {
-            //let expression = expressionsSystem.firstSystem[eqNum];
             let expression = expressionsSystem[systemName][eqNum];
             row[0] = eval(expression.derivX);
             row[1] = eval(expression.derivY);
@@ -149,22 +168,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function findRoots() {
         let finished;
-        x = inputApproximateX.value;
-        y = inputApproximateY.value;
+        x = +inputApproximateX.value;
+        y = +inputApproximateY.value;
+        k = 0;
         do {
             matrixFilling();
             gettingNewApproximate();
             finished = matrixF.every(numCheck);
+            k++;
+            console.log(k);
         }while(!finished);
 
         console.log(x ,y);
     }
 
     function setValues() {
-       resOutput.insertAdjacentHTML('beforeend', `
+        resOutput.insertAdjacentHTML('beforeend', `
             <span>x = ${x}</span> </br>
             <span>y = ${y}</span>
        `);
+       iterationOutput.textContent = k;
     }
 
     functionSystemExamples.forEach(funcSyst => {
@@ -174,9 +197,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     btnCount.addEventListener('click', () => {
+        refresh();
         findRoots();
-/*         resOutput.textContent += `x = ${x}`;
-        resOutput.textContent += `y = ${y}`; */
         setValues();
     }); 
 });
