@@ -14,18 +14,50 @@ document.addEventListener("DOMContentLoaded", () => {
                 derivX: '-1 * Math.sin(x - 2)',
                 derivY: '1'
             }
+        },
+        secondSystem: {
+            firstEq: {
+                exp: 'Math.sin(x + y) - 1.2*x - 0.2',
+                derivX: 'Math.cos(x + y) - 1.2',
+                derivY: 'Math.cos(y + x)'
+            },
+            secondEq: {
+                exp: 'x**2 + y**2 - 1',
+                derivX: '2*x',
+                derivY: '2*y'
+            }
         }
     };
 
-    let x = 1, y = 1, eps = 0.0001,
+    const functionSystemExamples = document.querySelectorAll('.function-system'),
+          btnCount = document.querySelector('#btn-count'),
+          inputApproximateX = document.querySelector('[name="x-approximate"]'),
+          inputApproximateY = document.querySelector('[name="y-approximate"]'),
+          resOutput = document.querySelector('.NJ_block .res_output');
+
+    let x, y, eps = 0.0001,
         rows = 2, columns = 3,
         matrixJacoby = [[], []],
-        matrixF = [];
+        matrixF = [],
+        systemName;
+
+    function systemSelection(e) {
+        let targetFunc = e.target;
+        if(targetFunc.getAttribute('data-function')) {
+            systemName = targetFunc.getAttribute('data-function');
+        } else {
+            systemName = targetFunc.parentNode.getAttribute('data-function');
+        }
+
+        console.log(systemName);
+    }
+
 
     function matrixJacobyFilling() {
         let eqNum = 'firstEq';
         matrixJacoby.forEach(row => {
-            let expression = expressionsSystem.firstSystem[eqNum];
+            //let expression = expressionsSystem.firstSystem[eqNum];
+            let expression = expressionsSystem[systemName][eqNum];
             row[0] = eval(expression.derivX);
             row[1] = eval(expression.derivY);
             eqNum = 'secondEq';
@@ -35,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function matrixFilling() {
-        let expression = expressionsSystem.firstSystem;
+        let expression = expressionsSystem[systemName];
         matrixF[0] = eval(expression.firstEq.exp);
         matrixF[1] = eval(expression.secondEq.exp);
 
@@ -117,6 +149,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function findRoots() {
         let finished;
+        x = inputApproximateX.value;
+        y = inputApproximateY.value;
         do {
             matrixFilling();
             gettingNewApproximate();
@@ -126,5 +160,23 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log(x ,y);
     }
 
-    findRoots();
+    function setValues() {
+       resOutput.insertAdjacentHTML('beforeend', `
+            <span>x = ${x}</span> </br>
+            <span>y = ${y}</span>
+       `);
+    }
+
+    functionSystemExamples.forEach(funcSyst => {
+        funcSyst.addEventListener('click', (e) => {
+            systemSelection(e);
+        });
+    });
+
+    btnCount.addEventListener('click', () => {
+        findRoots();
+/*         resOutput.textContent += `x = ${x}`;
+        resOutput.textContent += `y = ${y}`; */
+        setValues();
+    }); 
 });

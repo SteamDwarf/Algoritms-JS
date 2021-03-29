@@ -102,9 +102,20 @@
                 <div class="function-examples_block">
                     <h1>Примеры функций</h1>
                     <ol class="function_list">
-                        <li>3xsin(x) - 1</li>
-                        <li>2x^2 - 7x + 2</li>
-                        <li>2^x - 2x^2 + 1</li>
+                        <li class="function-system" data-function="firstSystem">
+                            <div class="function-bracket">&lbrace;</div>
+                            <div class="function_block" data-function="firstSystem">
+                                <div class="function-expression">sin(y + 2) - x = 1.5</div>
+                                <div class="function-expression">y + cos(x - 2) = 0.5</div>
+                            </div>
+                        </li>
+                        <li class="function-system" data-function="secondSystem">
+                            <div class="function-bracket">&lbrace;</div>
+                            <div class="function_block" data-function="secondSystem">
+                                <div class="function-expression">sin(x + y) - 1.2x = 0.2</div>
+                                <div class="function-expression">x^2 + y^2 = 1</div>
+                            </div>
+                        </li>
                     </ol>
                     <div class="instruction">
                         <button class="btn" id="btn-instruction">Указания</button>
@@ -118,23 +129,18 @@
     
                         <div class="data">
                             <div class="input-label">
-                                <label for="a-cordinate">Начало отрезка</label>
-                                <input class="cord_input" type="text" name="a-cordinate">  
+                                <label for="x-approximate">Начальное приближение Х</label>
+                                <input class="cord_input" type="text" name="x-approximate">  
                             </div>
                             <div class="input-label">
-                                <label for="b-cordinate">Конец отрезка</label>
-                                <input class="cord_input" type="text" name="b-cordinate">
+                                <label for="y-approximate">Начальное приближение Y</label>
+                                <input class="cord_input" type="text" name="y-approximate">
                             </div>
                             <div class="input-label">
                                 <label for="function-input">Выбранная функция</label>
                                 <div class="func_input"></div>
                             </div>
                         </div>
-    
-                    </div>
-    
-                    <div class="graph_chart">
-                        <div id="curve_chart"></div>
                     </div>
     
                     <div class="data_output">
@@ -155,8 +161,7 @@
                 </div>
     
                 <div class="btns-bar">
-                    <button class="btn" id="Nuton_btn">Расчитать методом Ньютона</button>
-                    <button class="btn" id="Dichotomy_btn">Расчитать методом дихотомии</button>
+                    <button class="btn" id="btn-count">Расчитать методом Ньютона-Рафсона</button>
                 </div>
     
             </div>
@@ -186,8 +191,8 @@
             </div>
             
             <div class="btn-programms_block">
-                <button class="btn btn-green" id="ND_btn">Решение нелинейного уровнения методом Ньютона и дихотомии</button>
-                <button class="btn btn-green" id="NJ_btn">Решение СНАУ методом Ньютона-Рафсона</button>
+                <button class="btn btn-programm" id="ND_btn">Решение нелинейного уровнения методом Ньютона и дихотомии</button>
+                <button class="btn btn-programm" id="NJ_btn">Решение СНАУ методом Ньютона-Рафсона</button>
             </div>
 
             <!-- <div class="information">

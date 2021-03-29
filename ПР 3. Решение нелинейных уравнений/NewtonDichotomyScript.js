@@ -1,7 +1,9 @@
 "use strict"
 
 document.addEventListener("DOMContentLoaded", () => {
-    const functionElements = document.querySelectorAll('.function_list li'),
+    const blockNDProgramm = document.querySelector('.ND_block'),
+          blockNJProgramm = document.querySelector('.NJ_block'),
+          functionElements = document.querySelectorAll('.function_list li'),
           aInput = document.querySelector('[name="a-cordinate"]'),
           bInput = document.querySelector('[name="b-cordinate"]'),
           funcInput = document.querySelector('.func_input'),
@@ -10,7 +12,9 @@ document.addEventListener("DOMContentLoaded", () => {
           btnCountDichotomy = document.querySelector('#Dichotomy_btn'),
           iterationOutput = document.querySelector('.iteration_output'),
           resOutput = document.querySelector('.res_output'),
-          errorOutput = document.querySelector('.error_output');
+          errorOutput = document.querySelector('.error_output'),
+          btnNDProgramm = document.querySelector('#ND_btn'),
+          btnNJProgramm = document.querySelector('#NJ_btn');
           
     let a, b, 
         step = 0.5,
@@ -147,14 +151,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function createAproximateCordinates(i) {
-        x = xCordinatesChart[0];
+        x = a;
         yDeriv = eval(derivativeSecond);
 
         if(yDeriv * yCordinatesChart[0] > 0) {
             y = yCordinatesChart[0];
             yDeriv = eval(derivativeFirst);
         } else {
-            x = xCordinatesChart[xCordinatesChart.length - 1];
+            x = b;
             y = yCordinatesChart[xCordinatesChart.length - 1];
             yDeriv = eval(derivativeFirst);
         }
@@ -212,6 +216,16 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }while(Math.abs(y) > eps);
     }
+
+    btnNDProgramm.addEventListener('click', () => {
+        blockNDProgramm.style.display = 'flex';
+        blockNJProgramm.style.display = 'none';
+    });
+
+    btnNJProgramm.addEventListener('click', () => {
+        blockNDProgramm.style.display = 'none';
+        blockNJProgramm.style.display = 'flex';
+    });
 
     functionElements.forEach(element => {
         element.addEventListener('click', ()=> {

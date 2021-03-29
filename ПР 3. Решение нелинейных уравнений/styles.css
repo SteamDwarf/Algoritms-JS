@@ -59,8 +59,12 @@ h3 {
 	justify-content: center;
 	margin: 50px auto 0px auto;
 }
-.ND_block {
+.NJ_block {
 	display: none;
+	height: 500px;
+}
+.NJ_block .information .data_input{
+	margin-bottom: 300px;
 }
 .container {
 	padding: 50px;
@@ -69,6 +73,46 @@ h3 {
 	width: 100%;
 	height: 100%;
 }
+
+.function-examples_block {
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	width: 20%;
+	padding: 20px;
+	box-shadow: -5px 0 10px 5px rgba(221, 221, 221, 1);
+	border-right: solid 5px #b3b3b3;
+}
+.function_list  li{
+	width: 100%;
+	cursor: pointer;
+	border: 1px solid #4A90E2;
+	border-radius: 4px;
+	list-style-type: none;
+	margin-bottom: 5px;
+	padding: 5px;
+}
+.function-system {
+	display: flex;
+	align-items: center;
+	/* justify-content: center; */
+}
+.function-bracket {
+	margin-right: 15px;
+	font-size: 3em;
+	color: #4A90E2;
+}
+.function_block {
+	display: flex;
+	flex-direction: column;
+	justify-content: left;
+}
+.function-expression:first-of-type {
+	margin-bottom: 10px;
+}
+
+
+
 .information {
 	width: 100%;
 	height: 100%; 
@@ -111,35 +155,31 @@ input {
 	margin-bottom: 10px;
 	font-size: 0.9em;
 	padding: 15px;
-	border: 2px solid #4A90E2;
+	border: none;
 	background-color: #fff;
 	outline: none;
 	transition: background-color 0.5s, color 0.5s;
+	box-shadow: 5px 0 10px 5px rgba(221, 221, 221, 1);
 }
 .btn:hover {
 	background-color: #4A90E2;
 	color: #fff;
 }
-
-
-.function-examples_block {
-	display: flex;
-	flex-direction: column;
-	text-align: center;
-	width: 20%;
-	padding: 20px;
-	box-shadow: -5px 0 10px 5px rgba(221, 221, 221, 1);
-	border-right: solid 5px #b3b3b3;
-}
-.function_list  li{
+.btn-programms_block {
 	width: 100%;
-	cursor: pointer;
-	border: 1px solid #4A90E2;
-	border-radius: 4px;
-	list-style-type: none;
-	margin-bottom: 5px;
-	padding: 5px;
+	text-align: center;
 }
+.btn-programm {
+	box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
+}
+.btn-programm:hover {
+	background-color: #7aa329;
+}
+
+
+
+
+
 .instruction {
 	margin-top: 50px;
 }
@@ -214,21 +254,6 @@ input {
 .btns-bar {
 	width: 10%;
 	padding: 123px 0;
-}
-.btn {
-	width: 180px;
-	margin-bottom: 10px;
-	font-size: 0.9em;
-	padding: 15px;
-	border: none;
-	background-color: #fff;
-	outline: none;
-	transition: background-color 0.5s, color 0.5s;
-	box-shadow: 5px 0 10px 5px rgba(221, 221, 221, 1);
-}
-.btn:hover {
-	background-color: #4A90E2;
-	color: #fff;
 }
 
 .modal {
