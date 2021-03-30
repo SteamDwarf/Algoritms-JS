@@ -63,7 +63,7 @@ h3 {
 	display: none;
 }
 .NJ_block .information .data_input{
-	margin-bottom: 100px;
+	margin-bottom: 20px;
 }
 
 .function-examples_block {
@@ -77,7 +77,9 @@ h3 {
 }
 .system-function_list {
 	text-align: center;
-	margin-bottom: 20px;
+	margin-bottom: 10px;
+	padding-bottom: 20px;
+	border-bottom: 3px solid #4A90E2;
 }
 .function_block_wrapper {
 	display: flex;
@@ -172,6 +174,9 @@ input {
 	color: #fff;
 }
 .btn-programms_block {
+	position: absolute;
+	top: 0%;
+	right: 0%;
 	width: 100%;
 	text-align: center;
 }
@@ -244,6 +249,12 @@ input {
 .btns-bar {
 	width: 10%;
 	padding: 123px 0;
+}
+.NJ_block .btns-bar {
+	width: 100%;
+	padding: 0;
+	text-align: center;
+	margin-bottom: 50px;
 }
 
 
