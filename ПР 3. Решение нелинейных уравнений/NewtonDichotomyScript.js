@@ -21,21 +21,18 @@ document.addEventListener("DOMContentLoaded", () => {
         '3xsin(x) - 1': {
             exp: '3*x*Math.sin(x)-1',
             deriv: '3*Math.sin(x) + 3*x*Math.cos(x)',
-            derivSecond: '3*(2*Math.cos(x) - x*Math.sin(x))'
         },
         '2x^2 - 7x + 2': {
             exp: '2*(x**2)-7*x+2',
             deriv: '4*x-7',
-            derivSecond: '4'
         },
         '2^x - 2x^2 + 1': {
             exp: '2**x-2*(x**2)+1',
             deriv: '2**x*Math.log(2)-4*x',
-            derivSecond: '(Math.log(2))**2*2**x-4'
         }
     };
 
-    let a, b, expression, derivativeFirst, derivativeSecond, x, y, yReserv, yDeriv;
+    let a, b, expression, derivativeFirst, x, y, yReserv, yDeriv;
     let step = 0.5;
     let xCordinatesChart = [];
     let yCordinatesChart = [];
@@ -77,7 +74,6 @@ document.addEventListener("DOMContentLoaded", () => {
             if(chosenFunction === key) {
                 expression = expressions[key].exp;
                 derivativeFirst = expressions[key].deriv;
-                derivativeSecond = expressions[key].derivSecond;
             }
         }
     }
@@ -106,9 +102,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         xCordinatesChart.forEach(num => {
             x = num;
-            y = eval(expression); //убрал let 
+            y = eval(expression);
             yCordinatesChart.push(y);
-        //console.log(xCordinatesChart); 
         });
     }
 
@@ -126,47 +121,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 yReserv = num;
             }
         });
-        /* yCordinatesChart.forEach((num, i) => {
-            if(num < 1 && num > -1) {
-                xApproximateCordinates.push(xCordinatesChart[i]);
-                yApproximateCordinates.push(yCordinatesChart[i]);
-            }  
-        });
-        if(yApproximateCordinates.length < 1 && step < 0.2) {
-            alert('В этом промежутке нет корней данного уранвения');
-            
-        } else if(yApproximateCordinates.length < 1 && step > 0.2) {
-            yCordinatesChart = [];
-            xApproximateCordinates = [];
-            yApproximateCordinates = [];
-            xCordinatesChart = [-5];
-            step /= 2;
-            createCordinates();
-            findingApproximate();
-        } */
-        //console.log(yCordinatesChart);
-        //console.log(a, b);
-        //console.log(xApproximateCordinates);
-        //console.log(yApproximateCordinates);
     }
     
     function createCordinates() {
         createChartCordinates();
         lineDraw();
-    }
-
-    function createAproximateCordinates() {
-        x = a;
-        yDeriv = eval(derivativeSecond);
-
-        if(yDeriv * yCordinatesChart[0] > 0) {
-            y = yCordinatesChart[0];
-            yDeriv = eval(derivativeFirst);
-        } else {
-            x = b;
-            y = yCordinatesChart[xCordinatesChart.length - 1];
-            yDeriv = eval(derivativeFirst);
-        }
     }
 
     function iterationNewton() { 
@@ -188,18 +147,6 @@ document.addEventListener("DOMContentLoaded", () => {
             rootElem.textContent = x;
             resOutput.append(rootElem);
         });
-
-        /* do {
-            let newX = x - y / yDeriv;
-            x = newX;
-            y = eval(expression);
-            yDeriv = eval(derivativeFirst);
-            k++;
-        } while(Math.abs(y) > eps); */
-    
-/*         rootElem.textContent = x;
-        resOutput.append(rootElem); */
-        //console.log(k);
     }
 
     function methodNewton() {
@@ -207,10 +154,8 @@ document.addEventListener("DOMContentLoaded", () => {
         b = +bInput.value;
         createCordinates();
         findingApproximate();
-        //createAproximateCordinates();
         iterationNewton();
     }
-
 
     function makeSegmentation(yArray) {
         let c = (a + b) / 2;
@@ -227,10 +172,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function methodDichotomy() {
+        let ySegment;
+
         a = +aInput.value;
         b = +bInput.value;
         createCordinates();
-        let ySegment = [yCordinatesChart[0], yCordinatesChart[yCordinatesChart.length - 1]];
+
+        ySegment = [yCordinatesChart[0], yCordinatesChart[yCordinatesChart.length - 1]];
         
         do {
             makeSegmentation(ySegment);
@@ -263,7 +211,6 @@ document.addEventListener("DOMContentLoaded", () => {
         refresh();
         methodNewton();
         iterationOutput.textContent = k;
-        //resOutput.textContent = x;
         errorOutput.textContent = Math.abs(y);
     });
 
