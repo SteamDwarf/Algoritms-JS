@@ -187,6 +187,13 @@ input {
 	background-color: #7aa329;
 }
 
+.res_output {
+	max-height: 100px;
+	overflow: auto;
+}
+
+
+
 
 .data_input {
 	text-align: center;

@@ -1,34 +1,22 @@
 "use strict"
 
 document.addEventListener("DOMContentLoaded", () => {
-    const blockNDProgramm = document.querySelector('.ND_block'),
-          blockNJProgramm = document.querySelector('.NJ_block'),
-          functionElements = document.querySelectorAll('.function_list li'),
-          aInput = document.querySelector('[name="a-cordinate"]'),
-          bInput = document.querySelector('[name="b-cordinate"]'),
-          funcInput = document.querySelector('.func_input'),
-          outputBlock = document.querySelector('.output_block'),
-          btnCountNuton = document.querySelector('#Nuton_btn'),
-          btnCountDichotomy = document.querySelector('#Dichotomy_btn'),
-          iterationOutput = document.querySelector('.iteration_output'),
-          resOutput = document.querySelector('.res_output'),
-          errorOutput = document.querySelector('.error_output'),
-          btnNDProgramm = document.querySelector('#ND_btn'),
-          btnNJProgramm = document.querySelector('#NJ_btn');
+    const blockNDProgramm = document.querySelector('.ND_block');
+    const blockNJProgramm = document.querySelector('.NJ_block');
+    const functionElements = document.querySelectorAll('.function_list li');
+    const aInput = document.querySelector('[name="a-cordinate"]');
+    const bInput = document.querySelector('[name="b-cordinate"]');
+    const funcInput = document.querySelector('.func_input');
+    const outputBlock = document.querySelector('.output_block');
+    const btnCountNuton = document.querySelector('#Nuton_btn');
+    const btnCountDichotomy = document.querySelector('#Dichotomy_btn');
+    const iterationOutput = document.querySelector('.iteration_output');
+    const resOutput = document.querySelector('.res_output');
+    const errorOutput = document.querySelector('.error_output');
+    const btnNDProgramm = document.querySelector('#ND_btn');
+    const btnNJProgramm = document.querySelector('#NJ_btn');
           
-    let a, b, 
-        step = 0.5,
-        eps = 0.00001,     
-        xCordinatesChart = [],
-        yCordinatesChart = [],
-        xApproximateCordinates = [],
-        yApproximateCordinates = [],
-        x, y, yDeriv,
-        k = 0,
-        expression,
-        derivativeFirst,
-        derivativeSecond;
-
+    const eps = 0.00001;     
     const expressions = {
         '3xsin(x) - 1': {
             exp: '3*x*Math.sin(x)-1',
@@ -47,6 +35,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
+    let a, b, expression, derivativeFirst, derivativeSecond, x, y, yReserv, yDeriv;
+    let step = 0.5;
+    let xCordinatesChart = [];
+    let yCordinatesChart = [];
+    let xApproximateCordinates = [];
+    let yApproximateCordinates = [];
+    let k = 0;
+
     function lineDraw() {
 
         google.charts.load('current', {'packages':['corechart']});
@@ -54,6 +50,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
         function drawChart() {
             const data = new google.visualization.DataTable();
+
+            let options = {
+                curveType: 'function',
+                legend: 'none'
+                }; 
+            let chart = new google.visualization.LineChart(document.querySelector('#curve_chart'));
             
             data.addColumn('number', 'x');
             data.addColumn('number', 'y');
@@ -63,13 +65,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 data.setCell(i, 0, xCordinatesChart[i]);
                 data.setCell(i, 1, yCordinatesChart[i]);
             }
-
-            let options = {
-            curveType: 'function',
-            legend: 'none'
-            }; 
-
-            let chart = new google.visualization.LineChart(document.querySelector('#curve_chart'));
 
             chart.draw(data, options);
         }
@@ -85,8 +80,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 derivativeSecond = expressions[key].derivSecond;
             }
         }
-
-        console.log(expression, derivativeFirst);
     }
 
     function refresh() {
@@ -94,7 +87,6 @@ document.addEventListener("DOMContentLoaded", () => {
         b = '';
         k = 0;
         step = 0.5;
-        eps = 0.00001;    
         xCordinatesChart = [];
         yCordinatesChart = [];
         xApproximateCordinates = [];
@@ -114,14 +106,27 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         xCordinatesChart.forEach(num => {
             x = num;
-            let y = eval(expression);
+            y = eval(expression); //убрал let 
             yCordinatesChart.push(y);
         //console.log(xCordinatesChart); 
         });
     }
 
     function findingApproximate() {
+        let minCord;
         yCordinatesChart.forEach((num, i) => {
+            if(i === 0) {
+                yReserv = num;
+            } else {
+                if(num * yReserv < 0) {
+                    minCord = Math.min(Math.abs(num), Math.abs(yReserv));
+                    yApproximateCordinates.push(minCord);
+                    xApproximateCordinates.push(xCordinatesChart[i]);
+                }
+                yReserv = num;
+            }
+        });
+        /* yCordinatesChart.forEach((num, i) => {
             if(num < 1 && num > -1) {
                 xApproximateCordinates.push(xCordinatesChart[i]);
                 yApproximateCordinates.push(yCordinatesChart[i]);
@@ -138,7 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
             step /= 2;
             createCordinates();
             findingApproximate();
-        }
+        } */
         //console.log(yCordinatesChart);
         //console.log(a, b);
         //console.log(xApproximateCordinates);
@@ -150,7 +155,7 @@ document.addEventListener("DOMContentLoaded", () => {
         lineDraw();
     }
 
-    function createAproximateCordinates(i) {
+    function createAproximateCordinates() {
         x = a;
         yDeriv = eval(derivativeSecond);
 
@@ -165,24 +170,44 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function iterationNewton() { 
-        do {
+        yApproximateCordinates.forEach((num, i) => {
+            let rootElem = document.createElement('div');
+
+            y = num;
+            x =  xApproximateCordinates[i];
+            yDeriv = eval(derivativeFirst);
+
+            do {
+                let newX = x - y / yDeriv;
+                x = newX;
+                y = eval(expression);
+                yDeriv = eval(derivativeFirst);
+                k++;
+            } while(Math.abs(y) > eps);
+
+            rootElem.textContent = x;
+            resOutput.append(rootElem);
+        });
+
+        /* do {
             let newX = x - y / yDeriv;
             x = newX;
             y = eval(expression);
             yDeriv = eval(derivativeFirst);
             k++;
-        } while(Math.abs(y) > eps);
-        let rootElem = document.createElement('div');
-        rootElem.textContent = x;
-        resOutput.append(rootElem);
-        console.log(k);
+        } while(Math.abs(y) > eps); */
+    
+/*         rootElem.textContent = x;
+        resOutput.append(rootElem); */
+        //console.log(k);
     }
 
     function methodNewton() {
         a = +aInput.value;
         b = +bInput.value;
         createCordinates();
-        createAproximateCordinates();
+        findingApproximate();
+        //createAproximateCordinates();
         iterationNewton();
     }
 
@@ -239,7 +264,7 @@ document.addEventListener("DOMContentLoaded", () => {
         methodNewton();
         iterationOutput.textContent = k;
         //resOutput.textContent = x;
-        errorOutput.textContent = y;
+        errorOutput.textContent = Math.abs(y);
     });
 
     btnCountDichotomy.addEventListener('click', () => {
@@ -247,7 +272,7 @@ document.addEventListener("DOMContentLoaded", () => {
         methodDichotomy();
         iterationOutput.textContent = k;
         resOutput.textContent = x;
-        errorOutput.textContent = y;
+        errorOutput.textContent = Math.abs(y);
     });
 
 });
