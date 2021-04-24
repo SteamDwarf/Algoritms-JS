@@ -18,8 +18,8 @@
                     <div class="data_input">
                         <h1>Введите исходные точки и значение функции в данных точках</h1>
                         <div class="data">
-                            <table class="table_data">
-                                <tr class="table-row">
+                            <table class="table_data" id="default-data_table">
+                                <tr class="table-row" id="row-x">
                                     <td class="table-cell"><div class="row-name">X</div></td>
                                     <td class="table-cell"><input class="cell_input" type="text"></td>
                                     <td class="table-cell"><input class="cell_input" type="text"></td>
@@ -27,7 +27,7 @@
                                     <td class="table-cell"><input class="cell_input" type="text"></td>
                                     <td class="table-cell"><input class="cell_input" type="text"></td>
                                 </tr>
-                                <tr class="table-row">
+                                <tr class="table-row" id="row-y">
                                     <td class="table-cell"><div class="row-name">Y</div></td>
                                     <td class="table-cell"><input class="cell_input" type="text"></td>
                                     <td class="table-cell"><input class="cell_input" type="text"></td>
@@ -41,8 +41,8 @@
 
                     <h1>Ввведите точки для вычисления значений функции</h1>
                     <div class="data_output">
-                        <table class="table_output">
-                            <tr class="table-row">
+                        <table class="table_output" id="generic-data_table">
+                            <tr class="table-row" id="row-x">
                                 <td class="table-cell"><div class="row-name">X</div></td>
                                 <td class="table-cell"><input class="cell_input" type="text"></td>
                                 <td class="table-cell"><input class="cell_input" type="text"></td>
@@ -50,7 +50,7 @@
                                 <td class="table-cell"><input class="cell_input" type="text"></td>
                                 <td class="table-cell"><input class="cell_input" type="text"></td>
                             </tr>
-                            <tr class="table-row">
+                            <tr class="table-row" id="polynom-result">
                                 <td class="table-cell"><div class="row-name">Y</div></td>
                                 <td class="table-cell"><div class="output-cell"></div></td>
                                 <td class="table-cell"><div class="output-cell"></div></td>
@@ -65,33 +65,6 @@
     
                 <div class="information">
     
-                    <!-- <div class="data_input">
-                        <h1>Введите ключевую информацию</h1>
-    
-                        <div class="data">
-                            <table class="table_data">
-                                <tr class="table-row">
-                                    <td class="table-cell"><div class="row-name">X</div></td>
-                                    <td class="table-cell"><input class="cell_input" type="text"></td>
-                                    <td class="table-cell"><input class="cell_input" type="text"></td>
-                                    <td class="table-cell"><input class="cell_input" type="text"></td>
-                                    <td class="table-cell"><input class="cell_input" type="text"></td>
-                                    <td class="table-cell"><input class="cell_input" type="text"></td>
-                                </tr>
-                                <tr class="table-row">
-                                    <td class="table-cell"><div class="row-name">Y</div></td>
-                                    <td class="table-cell"><input class="cell_input" type="text"></td>
-                                    <td class="table-cell"><input class="cell_input" type="text"></td>
-                                    <td class="table-cell"><input class="cell_input" type="text"></td>
-                                    <td class="table-cell"><input class="cell_input" type="text"></td>
-                                    <td class="table-cell"><input class="cell_input" type="text"></td>
-                                </tr>
-                            </table>
-
-                        </div>
-    
-                    </div> -->
-    
                     <div class="graph_chart">
                         <div id="curve_chart"></div>
                     </div>
@@ -100,35 +73,9 @@
                         <button class="btn" id="btn_draw-graph">Отобразить график функции</button>
                         <button class="btn" id="btn_count-polynom">Вычислить полином</button>
                     </div>
-    
-                    <!-- <div class="data_output">
-                        <table class="table_output">
-                            <tr class="table-row">
-                                <td class="table-cell"><div class="row-name">X</div></td>
-                                <td class="table-cell"><input class="cell_input" type="text"></td>
-                                <td class="table-cell"><input class="cell_input" type="text"></td>
-                                <td class="table-cell"><input class="cell_input" type="text"></td>
-                                <td class="table-cell"><input class="cell_input" type="text"></td>
-                                <td class="table-cell"><input class="cell_input" type="text"></td>
-                            </tr>
-                            <tr class="table-row">
-                                <td class="table-cell"><div class="row-name">Y</div></td>
-                                <td class="table-cell"><div></div></td>
-                                <td class="table-cell"><div></div></td>
-                                <td class="table-cell"><div></div></td>
-                                <td class="table-cell"><div></div></td>
-                                <td class="table-cell"><div></div></td>
-                            </tr>
-                        </table>
-                    </div> -->
-    
+
                 </div>
-    
-                <!-- <div class="btns-bar">
-                    <button class="btn" id="Nuton_btn">Расчитать методом Ньютона</button>
-                    <button class="btn" id="Dichotomy_btn">Расчитать методом дихотомии</button>
-                </div> -->
-    
+                
             </div>
     
             <div class="NJ_block">
@@ -197,7 +144,6 @@
         </div>
 
         <script src="https://www.gstatic.com/charts/loader.js"></script>
-        <script src="./NewtonDichotomyScript.js"></script>
-        <script src="./JacobyScript.js"></script>
+        <script src="./index.js"></script>
     </body>
 </html>
