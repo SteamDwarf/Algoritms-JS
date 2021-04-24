@@ -174,9 +174,12 @@ document.addEventListener("DOMContentLoaded", () => {
         k = 0;
         do {
             matrixFilling();
-            gettingNewApproximate();
             finished = matrixF.every(numCheck);
             k++;
+            
+            if(!finished) {
+                gettingNewApproximate();
+            }
         }while(!finished);
     }
 

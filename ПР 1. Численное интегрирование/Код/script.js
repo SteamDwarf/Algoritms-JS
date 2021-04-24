@@ -59,8 +59,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function funcExpressionReplace(x) {
-        let functionExpression = ' ' + funcInput.value,
-            expressions = {
+        let functionExpression = ' ' + funcInput.value;
+        console.log('Первоначальная строка' ,functionExpression);
+        let expressions = {
                 ln: ' Math.log',
                 '\ cos': ' Math.cos',
                 '\ sin': ' Math.sin',
@@ -79,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
             let reg = new RegExp(key,'g');
             functionExpression = functionExpression.replace(reg, expressions[key]);
         }
-        
+        console.log('Конечная строка', functionExpression);
         let res;
         try {
             res = eval(functionExpression);

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Интерполяция и аппроксимация</title>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">    
+        <link rel="stylesheet" href="./styles.css">
+    </head>
+    <body>
+        <div class="interface">
+
+            <div class="Lagrange_block">
+
+                <div class="data_block">
+
+                    <div class="data_input">
+                        <h1>Введите исходные точки и значение функции в данных точках</h1>
+                        <div class="data">
+                            <table class="table_data">
+                                <tr class="table-row">
+                                    <td class="table-cell"><div class="row-name">X</div></td>
+                                    <td class="table-cell"><input class="cell_input" type="text"></td>
+                                    <td class="table-cell"><input class="cell_input" type="text"></td>
+                                    <td class="table-cell"><input class="cell_input" type="text"></td>
+                                    <td class="table-cell"><input class="cell_input" type="text"></td>
+                                    <td class="table-cell"><input class="cell_input" type="text"></td>
+                                </tr>
+                                <tr class="table-row">
+                                    <td class="table-cell"><div class="row-name">Y</div></td>
+                                    <td class="table-cell"><input class="cell_input" type="text"></td>
+                                    <td class="table-cell"><input class="cell_input" type="text"></td>
+                                    <td class="table-cell"><input class="cell_input" type="text"></td>
+                                    <td class="table-cell"><input class="cell_input" type="text"></td>
+                                    <td class="table-cell"><input class="cell_input" type="text"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <h1>Ввведите точки для вычисления значений функции</h1>
+                    <div class="data_output">
+                        <table class="table_output">
+                            <tr class="table-row">
+                                <td class="table-cell"><div class="row-name">X</div></td>
+                                <td class="table-cell"><input class="cell_input" type="text"></td>
+                                <td class="table-cell"><input class="cell_input" type="text"></td>
+                                <td class="table-cell"><input class="cell_input" type="text"></td>
+                                <td class="table-cell"><input class="cell_input" type="text"></td>
+                                <td class="table-cell"><input class="cell_input" type="text"></td>
+                            </tr>
+                            <tr class="table-row">
+                                <td class="table-cell"><div class="row-name">Y</div></td>
+                                <td class="table-cell"><div class="output-cell"></div></td>
+                                <td class="table-cell"><div class="output-cell"></div></td>
+                                <td class="table-cell"><div class="output-cell"></div></td>
+                                <td class="table-cell"><div class="output-cell"></div></td>
+                                <td class="table-cell"><div class="output-cell"></div></td>
+                            </tr>
+                        </table>
+                    </div>
+
+                </div>
+    
+                <div class="information">
+    
+                    <!-- <div class="data_input">
+                        <h1>Введите ключевую информацию</h1>
+    
+                        <div class="data">
+                            <table class="table_data">
+                                <tr class="table-row">
+                                    <td class="table-cell"><div class="row-name">X</div></td>
+                                    <td class="table-cell"><input class="cell_input" type="text"></td>
+                                    <td class="table-cell"><input class="cell_input" type="text"></td>
+                                    <td class="table-cell"><input class="cell_input" type="text"></td>
+                                    <td class="table-cell"><input class="cell_input" type="text"></td>
+                                    <td class="table-cell"><input class="cell_input" type="text"></td>
+                                </tr>
+                                <tr class="table-row">
+                                    <td class="table-cell"><div class="row-name">Y</div></td>
+                                    <td class="table-cell"><input class="cell_input" type="text"></td>
+                                    <td class="table-cell"><input class="cell_input" type="text"></td>
+                                    <td class="table-cell"><input class="cell_input" type="text"></td>
+                                    <td class="table-cell"><input class="cell_input" type="text"></td>
+                                    <td class="table-cell"><input class="cell_input" type="text"></td>
+                                </tr>
+                            </table>
+
+                        </div>
+    
+                    </div> -->
+    
+                    <div class="graph_chart">
+                        <div id="curve_chart"></div>
+                    </div>
+
+                    <div class="button_block">
+                        <button class="btn" id="btn_draw-graph">Отобразить график функции</button>
+                        <button class="btn" id="btn_count-polynom">Вычислить полином</button>
+                    </div>
+    
+                    <!-- <div class="data_output">
+                        <table class="table_output">
+                            <tr class="table-row">
+                                <td class="table-cell"><div class="row-name">X</div></td>
+                                <td class="table-cell"><input class="cell_input" type="text"></td>
+                                <td class="table-cell"><input class="cell_input" type="text"></td>
+                                <td class="table-cell"><input class="cell_input" type="text"></td>
+                                <td class="table-cell"><input class="cell_input" type="text"></td>
+                                <td class="table-cell"><input class="cell_input" type="text"></td>
+                            </tr>
+                            <tr class="table-row">
+                                <td class="table-cell"><div class="row-name">Y</div></td>
+                                <td class="table-cell"><div></div></td>
+                                <td class="table-cell"><div></div></td>
+                                <td class="table-cell"><div></div></td>
+                                <td class="table-cell"><div></div></td>
+                                <td class="table-cell"><div></div></td>
+                            </tr>
+                        </table>
+                    </div> -->
+    
+                </div>
+    
+                <!-- <div class="btns-bar">
+                    <button class="btn" id="Nuton_btn">Расчитать методом Ньютона</button>
+                    <button class="btn" id="Dichotomy_btn">Расчитать методом дихотомии</button>
+                </div> -->
+    
+            </div>
+    
+            <div class="NJ_block">
+    
+                <div class="information">  
+                    
+                    <!-- <ol class="system-function_list">
+                        <h1>Выберите систему уравнений</h1>
+                        <div class="function_block_wrapper">
+                            <li class="function-system" data-function="firstSystem">
+                                <div class="function-bracket">&lbrace;</div>
+                                <div class="function_block" data-function="firstSystem">
+                                    <div class="function-expression">sin(y + 2) - x = 1.5</div>
+                                    <div class="function-expression">y + cos(x - 2) = 0.5</div>
+                                </div>
+                            </li>
+                            <li class="function-system" data-function="secondSystem">
+                                <div class="function-bracket">&lbrace;</div>
+                                <div class="function_block" data-function="secondSystem">
+                                    <div class="function-expression">sin(x + y) - 1.2x = 0.2</div>
+                                    <div class="function-expression">x^2 + y^2 = 1</div>
+                                </div>
+                            </li>
+                        </div>
+                    </ol> -->
+
+                    <div class="data_input">
+                        <h1>Введите ключевую информацию</h1>
+    
+                        <div class="data">
+                            <div class="input-label">
+                                <label for="x-approximate">Начальное приближение Х</label>
+                                <input class="cord_input" type="text" name="x-approximate">  
+                            </div>
+                            <div class="input-label">
+                                <label for="y-approximate">Начальное приближение Y</label>
+                                <input class="cord_input" type="text" name="y-approximate">
+                            </div>
+                        </div>
+                    </div>
+    
+                    <!-- <div class="btns-bar">
+                        <button class="btn" id="btn-count">Расчитать методом Ньютона-Рафсона</button>
+                    </div> -->
+
+                    <div class="data_output">
+                        <div class="output-elem">
+                            <label>Количество итераций</label>
+                            <div class="iteration_output"></div>
+                        </div>
+                        <div class="output-elem">
+                            <label>Результат</label>
+                            <div class="res_output"></div>
+                        </div>
+                    </div>
+    
+                </div>
+    
+            </div>
+            
+            <div class="btn-programms_block">
+                <button class="btn btn-programm" id="ND_btn">Решение нелинейного уровнения методом Ньютона и дихотомии</button>
+                <button class="btn btn-programm" id="NJ_btn">Решение СНАУ методом Ньютона-Рафсона</button>
+            </div>
+
+        </div>
+
+        <script src="https://www.gstatic.com/charts/loader.js"></script>
+        <script src="./NewtonDichotomyScript.js"></script>
+        <script src="./JacobyScript.js"></script>
+    </body>
+</html>
