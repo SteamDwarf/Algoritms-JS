@@ -6,23 +6,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const defaultXCells = defaultDataTable.querySelectorAll('#row-x .cell_input');
     const defaultYCells = defaultDataTable.querySelectorAll('#row-y .cell_input');
     const genericXCells = genericDataTable.querySelectorAll('#row-x .cell_input');
-    const genericYCells = genericDataTable.querySelectorAll('#polynom-result .output-cell');
-    const btnDrawGraph = document.querySelector('#btn_draw-graph');
+    //const genericYCells = genericDataTable.querySelectorAll('#polynom-result .output-cell');
+    //const btnDrawGraph = document.querySelector('#btn_draw-graph');
     const btnCountPolynom = document.querySelector('#btn_count-polynom');
 
     let xCords = [];
     let yCords = [];
+    let resultX = [];
+    let resultY = [];
     let x;
-
-    /*let xCords = [2, 3, 4, 5, 6];
-    let yCords = [0.4, 0.55, 0.13, 0.09, 0.07];
-    let x = 10;*/
-    /*let xCords = [2, 5, -6, 7, 4, 3, 8, 9, 1, -2];
-    let yCords = [-1, 77, -297, 249, 33, 9, 389, 573, -3, -21];
-    let x = 7;*/
-    /*let xCords = [1.3, 2.1, 3.7, 4.5, 6.1, 7.7, 8.5];
-    let yCords = [1.7777, 4.5634, 13.8436, 20.3952, 37.33872, 59.4051, 72.35931 ];
-    let x = 1.5674;*/
+    let step = 0.25;
 
     function compare(a, b) {
         if (a > b) return 1;
@@ -30,20 +23,49 @@ document.addEventListener("DOMContentLoaded", () => {
         if (a < b) return -1;
       }
 
+    function MakeFragmentation(cordArray) {
+        let a = +cordArray[0];
+        let result = [a];
+
+        do{
+            a += step;
+            result.push(a);
+
+        }while(a < cordArray[cordArray.length - 1]);
+
+        return result;
+    }
+
     function GettingData(defaultCellsX, defaultCellsY, genericCellsX, genericCellsY) {
+        let result;
+
         xCords = [];
         yCords = [];
 
-        if(genericCellsX && genericCellsY) {
-            let genericX = [];
+        defaultCellsX.forEach(cell => {
+            xCords.push(cell.value);
+        });
 
-            defaultCellsX.forEach(cell => {
+        defaultCellsY.forEach(cell => {
+            yCords.push(cell.value);
+        });
+
+        resultX = MakeFragmentation(xCords);
+        result = GetFunctionY(resultX);
+        resultY = result;
+        
+
+        if(genericCellsX[0].value !== "") {
+            let genericX = [];
+            let fragmentedX = []
+
+            /* defaultCellsX.forEach(cell => {
                 xCords.push(cell.value);
             });
     
             defaultCellsY.forEach(cell => {
                 yCords.push(cell.value);
-            });
+            }); */
     
             genericCellsX.forEach(cell => {
                 if(cell.value !== '') {
@@ -51,16 +73,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             });
 
-            //genericX.sort(compare);
-            let result = GetFunctionY(genericX);
+            genericX.sort(compare);
+            fragmentedX = MakeFragmentation(genericX);
+            result = GetFunctionY(fragmentedX);
 
-            genericX.forEach(num => {
-                xCords.push(num);
+            fragmentedX.forEach(num => {
+                resultX.push(num);
             });
 
             result.forEach((num, i) => {
-                yCords.push(num);
-                genericYCells[i].textContent = num.toFixed(5);
+                resultY.push(num);
             });
 
             /*genericYCells.forEach((cell, i) => {
@@ -69,15 +91,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             return;
         }
-
-        
-        defaultCellsX.forEach(cell => {
-            xCords.push(cell.value);
-        });
-
-        defaultCellsY.forEach(cell => {
-            yCords.push(cell.value);
-        });
     }
 
     function DrawGraph() {
@@ -97,11 +110,11 @@ document.addEventListener("DOMContentLoaded", () => {
             
             data.addColumn('number', 'x');
             data.addColumn('number', 'y');
-            data.addRows(xCords.length);
+            data.addRows(resultX.length);
 
-            for (let i = 0; i < xCords.length; i++) {
-                data.setCell(i, 0, xCords[i]);
-                data.setCell(i, 1, yCords[i]);
+            for (let i = 0; i < resultX.length; i++) {
+                data.setCell(i, 0, resultX[i]);
+                data.setCell(i, 1, resultY[i]);
             }
 
             data.sort([{column:0}]);
@@ -142,18 +155,13 @@ document.addEventListener("DOMContentLoaded", () => {
         return polynom;
     }
 
-    btnDrawGraph.addEventListener('click', () => {
+    /*btnDrawGraph.addEventListener('click', () => {
         GettingData(defaultXCells, defaultYCells);
         DrawGraph();
-    });
+    });*/
 
     btnCountPolynom.addEventListener('click', () => {
-        GettingData(defaultXCells, defaultYCells, genericXCells, genericYCells);
+        GettingData(defaultXCells, defaultYCells, genericXCells);
         DrawGraph();
     });
-
-   //GetFunctionY();
-   //lineDraw();
 });
-
-//-4 * (-1.5) * (-0.6) * (-0.25)
