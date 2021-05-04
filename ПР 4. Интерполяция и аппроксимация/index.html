@@ -39,6 +39,11 @@
                         </div>
                     </div>
 
+                    <div class="fragmentation">
+                        <label for="input_label">Шаг разбиения</label>
+                        <input type="text" class="fragmentation_input" name="fragmentation_input">
+                    </div>
+
                     <h1>Ввведите точки для вычисления значений функции</h1>
                     <div class="data_output">
                         <table class="table_output" id="generic-data_table">
@@ -78,49 +83,60 @@
                 
             </div>
     
-            <div class="NJ_block">
+            <div class="Spline_block">
     
-                <div class="information">  
-                    
-                    <!-- <ol class="system-function_list">
-                        <h1>Выберите систему уравнений</h1>
-                        <div class="function_block_wrapper">
-                            <li class="function-system" data-function="firstSystem">
-                                <div class="function-bracket">&lbrace;</div>
-                                <div class="function_block" data-function="firstSystem">
-                                    <div class="function-expression">sin(y + 2) - x = 1.5</div>
-                                    <div class="function-expression">y + cos(x - 2) = 0.5</div>
-                                </div>
-                            </li>
-                            <li class="function-system" data-function="secondSystem">
-                                <div class="function-bracket">&lbrace;</div>
-                                <div class="function_block" data-function="secondSystem">
-                                    <div class="function-expression">sin(x + y) - 1.2x = 0.2</div>
-                                    <div class="function-expression">x^2 + y^2 = 1</div>
-                                </div>
-                            </li>
-                        </div>
-                    </ol> -->
-
+                <div class="function-examples_block">
+                    <h1>Примеры функций</h1>
+                    <ol class="function_list">
+                        <li>e<sup>x</sup></li>
+                        <li>e<sup>-x</sup></li>
+                        <li>sh(x)</li>
+                        <li>ch(x)</li>
+                        <li>sin(x)</li>
+                        <li>cos(x)</li>
+                        <li>ln(x)</li>
+                    </ol>
+                </div>
+    
+                <div class="information">
+    
                     <div class="data_input">
                         <h1>Введите ключевую информацию</h1>
     
                         <div class="data">
                             <div class="input-label">
-                                <label for="x-approximate">Начальное приближение Х</label>
-                                <input class="cord_input" type="text" name="x-approximate">  
+                                <label for="a-cordinate">Начало отрезка</label>
+                                <input class="cord_input" type="text" name="a-cordinate">  
                             </div>
                             <div class="input-label">
-                                <label for="y-approximate">Начальное приближение Y</label>
-                                <input class="cord_input" type="text" name="y-approximate">
+                                <label for="b-cordinate">Конец отрезка</label>
+                                <input class="cord_input" type="text" name="b-cordinate">
+                            </div>
+                            <div class="input-label">
+                                <label for="step">Шаг</label>
+                                <input class="cord_input" type="text" name="step">
+                            </div>
+                            <div class="input-label">
+                                <label for="x-input">Искомый x</label>
+                                <input class="cord_input" type="text" name="x-input">
+                            </div>
+                            <div class="input-label">
+                                <label for="function-input">Выбранная функция</label>
+                                <div class="func_input"></div>
                             </div>
                         </div>
+    
                     </div>
     
-                    <!-- <div class="btns-bar">
-                        <button class="btn" id="btn-count">Расчитать методом Ньютона-Рафсона</button>
-                    </div> -->
+                    <div class="graph_chart">
+                        <div id="curve_chart"></div>
+                    </div>
 
+                    <div class="btns-bar">
+                        <button class="btn" id="Graph_btn">Отрисовать график сплайном</button>
+                        <button class="btn" id="Find-x_btn">Найти значение функции в точке х</button>
+                    </div>
+    
                     <div class="data_output">
                         <div class="output-elem">
                             <label>Количество итераций</label>
@@ -130,20 +146,25 @@
                             <label>Результат</label>
                             <div class="res_output"></div>
                         </div>
+                        <div class="output-elem">
+                            <label>Погрешность</label>
+                            <div class="error_output"></div>
+                        </div>
                     </div>
     
                 </div>
     
             </div>
             
-<!--             <div class="btn-programms_block">
-                <button class="btn btn-programm" id="ND_btn">Решение нелинейного уровнения методом Ньютона и дихотомии</button>
-                <button class="btn btn-programm" id="NJ_btn">Решение СНАУ методом Ньютона-Рафсона</button>
-            </div> -->
+            <div class="btn-programms_block">
+                <button class="btn btn-programm" id="Lagrange_btn">Интерполяция методом Лагранжа</button>
+                <button class="btn btn-programm" id="Spline_btn">Интерполяция кубическим сплайном</button>
+            </div>
 
         </div>
 
         <script src="https://www.gstatic.com/charts/loader.js"></script>
-        <script src="./index.js"></script>
+        <script src="./Lagrange.js"></script>
+        <script src="./Spline.js"></script>
     </body>
 </html>

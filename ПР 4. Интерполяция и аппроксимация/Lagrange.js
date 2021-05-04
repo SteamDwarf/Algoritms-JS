@@ -6,16 +6,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const defaultXCells = defaultDataTable.querySelectorAll('#row-x .cell_input');
     const defaultYCells = defaultDataTable.querySelectorAll('#row-y .cell_input');
     const genericXCells = genericDataTable.querySelectorAll('#row-x .cell_input');
-    //const genericYCells = genericDataTable.querySelectorAll('#polynom-result .output-cell');
-    //const btnDrawGraph = document.querySelector('#btn_draw-graph');
     const btnCountPolynom = document.querySelector('#btn_count-polynom');
+    const fragmentationInput = document.querySelector('.fragmentation_input');
 
     let xCords = [];
     let yCords = [];
     let resultX = [];
     let resultY = [];
     let x;
-    let step = 0.25;
+    let step;
 
     function compare(a, b) {
         if (a > b) return 1;
@@ -27,6 +26,12 @@ document.addEventListener("DOMContentLoaded", () => {
         let a = +cordArray[0];
         let result = [a];
 
+        if(fragmentationInput.value === ''){
+            step = 0.25;
+        }else {
+            step = +fragmentationInput.value;
+        }
+
         do{
             a += step;
             result.push(a);
@@ -36,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return result;
     }
 
-    function GettingData(defaultCellsX, defaultCellsY, genericCellsX, genericCellsY) {
+    function GettingData(defaultCellsX, defaultCellsY, genericCellsX) {
         let result;
 
         xCords = [];
@@ -57,15 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if(genericCellsX[0].value !== "") {
             let genericX = [];
-            let fragmentedX = []
-
-            /* defaultCellsX.forEach(cell => {
-                xCords.push(cell.value);
-            });
-    
-            defaultCellsY.forEach(cell => {
-                yCords.push(cell.value);
-            }); */
+            let fragmentedX = [];
     
             genericCellsX.forEach(cell => {
                 if(cell.value !== '') {
@@ -84,10 +81,6 @@ document.addEventListener("DOMContentLoaded", () => {
             result.forEach((num, i) => {
                 resultY.push(num);
             });
-
-            /*genericYCells.forEach((cell, i) => {
-                cell.textContent = result[i].toFixed(5);
-            });*/
 
             return;
         }
