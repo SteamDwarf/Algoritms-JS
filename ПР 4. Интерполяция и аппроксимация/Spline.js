@@ -9,8 +9,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const aInput = document.querySelector('[name="a-cordinate"]');
     const bInput = document.querySelector('[name="b-cordinate"]');
     const stepInput = document.querySelector('[name="step"]');
+    const xInput = document.querySelector('[name="x-input"]');
     const funcInput = document.querySelector('.func_input');
     const btnGraph = document.querySelector('#Graph_btn');
+    const resOutput = document.querySelector('.res_output');
 
     let curentFunc;
     let a;
@@ -20,31 +22,46 @@ document.addEventListener("DOMContentLoaded", () => {
     let Y = [];
     let splines = [];
 
-    /* const X = [0.1, 0.5, 0.9, 1.3, 1.7];
-    const Y = [-2.3026, -0.69315, -0.10536, 0.26236, 0.53063];
-    const x = 0.8; */
-    //const X = [1, 1.04, 1.08, 1.12, 1.16, 1.2];
-    //const Y = [2.7183, 2.8292, 2.9447, 3.0649, 3.1899, 3.3201];
-    //const x = 1.05;
-
-
     function GetInputData() {
         X = [];
         Y = [];
-        GetCurrentFunc(funcInput.textContent);
-        a = +aInput.value;
-        b = +bInput.value;
-        step = +stepInput.value;
-        MakeFragmentation();
-        //console.log(`a: ${a}, b: ${b}, step: ${step}, X: ${X}, Y: ${Y}`);
+
+        try {
+            GetCurrentFunc(funcInput.textContent);
+            a = +aInput.value;
+            b = +bInput.value;
+            step = +stepInput.value;
+
+            if(funcInput.textContent === ''){
+                throw new SyntaxError("Введите функцию");
+            }
+            if(aInput.value === ''){
+                throw new SyntaxError("Введите начало отрезка");
+            }
+            if(bInput.value === ''){
+                throw new SyntaxError("Введите конец отрезка");
+            }
+            if(stepInput.value === ''){
+                throw new SyntaxError("Введите шаг");
+            }
+        } catch(e){
+            alert(e.message);
+            throw new Error();
+        }
+        
+        MakeFragmentation(step, true);
+        console.log(`Y: ${Y}`);
     }
 
     function GetCurrentFunc(funcText){
         switch(funcText){
-            case 'ex':
+            case '':
+                alert('Введите функцию');
+                break;
+            case 'e^x':
                 curentFunc = (x) => Math.E ** x;
                 break;
-            case 'e-x':
+            case 'e^(-x)':
                 curentFunc = (x) => Math.E ** -x;
                 break;
             case 'sh(x)':
@@ -65,16 +82,21 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    function MakeFragmentation() {
+    function MakeFragmentation(stepFragm, hasFunction) {
+        let num = a;
+        X = [];
         do {
-            X.push(a);
-            Y.push(curentFunc(a));
-            a += step;
-        }while(a < b);
+            X.push(num);
+            if(hasFunction){
+                Y.push(curentFunc(num));
+            }
+            num += stepFragm;
+        }while(num <= b + stepFragm);
     }
 
     function BuildSpline(x, y) {
         let n = x.length;
+        splines = [];
 
         for (let i = 0; i < n; i++){
             splines.push({a:null, b:null, c:null, d:null, x:null});
@@ -114,6 +136,39 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    function DrawGraph() {
+
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            const data = new google.visualization.DataTable();
+
+            let options = {
+                curveType: 'function',
+                legend: 'none',
+                focusTarget: 'category',
+                }; 
+            let chart = new google.visualization.LineChart(document.querySelector('.Spline_block #curve_chart'));
+            
+            MakeFragmentation(step / 4,  false);
+            data.addColumn('number', 'x');
+            data.addColumn('number', 'y');
+            data.addRows(X.length);
+
+            
+            for (let i = 0; i < X.length; i++) {
+                data.setCell(i, 0, X[i]);
+                data.setCell(i, 1, Interpolate(X[i]));
+                console.log(data);
+            }
+
+            data.sort([{column:0}]);
+            chart.draw(data, options);
+        }
+    }
+
+
     function Interpolate(x) {
         if (splines == null){
             return NaN;
@@ -146,12 +201,6 @@ document.addEventListener("DOMContentLoaded", () => {
         return s.a + (s.b + (s.c / 2.0 + s.d * dx / 6.0) * dx) * dx;
     }
 
-    //BuildSpline(X,Y);
-    //console.log(splines);
-    //console.log(Interpolate(x));
-    GetCurrentFunc('ex');
-    MakeFragmentation();
-
     btnLagrange.addEventListener('click', () => {
         blockSpline.style.display = 'none';
         blockLagrange.style.display = 'flex';
@@ -163,8 +212,21 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     btnGraph.addEventListener('click', () => {
-        GetInputData();
+        try {
+            GetInputData();
+        } catch(e) {
+            return;
+        }
+
         BuildSpline(X, Y);
+        DrawGraph();
+
+        if(xInput.value !== '') {
+            let xToFind = xInput.value;
+            resOutput.textContent = Interpolate(xToFind);
+        } else {
+            resOutput.textContent = '';
+        }
         console.log(splines);
     });
 
