@@ -50,29 +50,6 @@
                         <h1>Результат</h1>
                         <div class="res_output" id="cord-output"></div>
                     </div>
-                    
-
-                    <!-- <h1>Ввведите точки для вычисления значений функции</h1>
-                    <div class="data_output">
-                        <table class="table_output" id="generic-data_table">
-                            <tr class="table-row" id="row-x">
-                                <td class="table-cell"><div class="row-name">X</div></td>
-                                <td class="table-cell"><input class="cell_input" type="text"></td>
-                                <td class="table-cell"><input class="cell_input" type="text"></td>
-                                <td class="table-cell"><input class="cell_input" type="text"></td>
-                                <td class="table-cell"><input class="cell_input" type="text"></td>
-                                <td class="table-cell"><input class="cell_input" type="text"></td>
-                            </tr>
-                            <tr class="table-row" id="polynom-result">
-                                <td class="table-cell"><div class="row-name">Y</div></td>
-                                <td class="table-cell"><div class="output-cell"></div></td>
-                                <td class="table-cell"><div class="output-cell"></div></td>
-                                <td class="table-cell"><div class="output-cell"></div></td>
-                                <td class="table-cell"><div class="output-cell"></div></td>
-                                <td class="table-cell"><div class="output-cell"></div></td>
-                            </tr>
-                        </table>
-                    </div> -->
 
                 </div>
     
@@ -83,7 +60,6 @@
                     </div>
 
                     <div class="button_block">
-                        <!-- <button class="btn" id="btn_draw-graph">Отобразить график функции</button> -->
                         <button class="btn" id="btn_count-Lagrange">Вычислить полином методом Лагранжа</button>
                         <button class="btn" id="btn_count-spline">Вычислить полином методом сплайна</button>
                     </div>
@@ -91,81 +67,10 @@
                 </div>
                 
             </div>
-    
-            <div class="Spline_block">
-    
-                <div class="function-examples_block">
-                    <h1>Примеры функций</h1>
-                    <ol class="function_list">
-                        <li>e^x</sup></li>
-                        <li>e^(-x)</sup></li>
-                        <li>sh(x)</li>
-                        <li>ch(x)</li>
-                        <li>sin(x)</li>
-                        <li>cos(x)</li>
-                        <li>ln(x)</li>
-                    </ol>
-                </div>
-    
-                <div class="information">
-    
-                    <div class="data_input">
-                        <h1>Введите ключевую информацию</h1>
-    
-                        <div class="data">
-                            <div class="input-label">
-                                <label for="a-cordinate">Начало отрезка</label>
-                                <input class="cord_input" type="text" name="a-cordinate">  
-                            </div>
-                            <div class="input-label">
-                                <label for="b-cordinate">Конец отрезка</label>
-                                <input class="cord_input" type="text" name="b-cordinate">
-                            </div>
-                            <div class="input-label">
-                                <label for="step">Шаг</label>
-                                <input class="cord_input" type="text" name="step">
-                            </div>
-                            <div class="input-label">
-                                <label for="x-input">Искомый x</label>
-                                <input class="cord_input" type="text" name="x-input">
-                            </div>
-                            <div class="input-label">
-                                <label for="function-input">Выбранная функция</label>
-                                <div class="func_input"></div>
-                            </div>
-                        </div>
-    
-                    </div>
-    
-                    <div class="graph_chart">
-                        <div id="curve_chart"></div>
-                    </div>
-
-                    <div class="btns-bar">
-                        <button class="btn" id="Graph_btn">Отрисовать график сплайном</button>
-                        <!-- <button class="btn" id="Find-x_btn">Найти значение функции в точке х</button> -->
-                    </div>
-    
-                    <div class="data_output">
-                        <div class="output-elem">
-                            <label>Результат</label>
-                            <div class="res_output"></div>
-                        </div>
-                    </div>
-    
-                </div>
-    
-            </div>
-            
-            <!-- <div class="btn-programms_block">
-                <button class="btn btn-programm" id="Lagrange_btn">Интерполяция методом Лагранжа</button>
-                <button class="btn btn-programm" id="Spline_btn">Интерполяция кубическим сплайном</button>
-            </div> -->
 
         </div>
 
         <script src="https://www.gstatic.com/charts/loader.js"></script>
-        <script src="./Lagrange.js"></script>
-        <!-- <script src="./Spline.js"></script> -->
+        <script src="./script.js"></script>
     </body>
 </html>

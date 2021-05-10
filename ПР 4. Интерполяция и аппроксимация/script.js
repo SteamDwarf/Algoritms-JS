@@ -2,10 +2,8 @@
 
 document.addEventListener("DOMContentLoaded", () => {
     const defaultDataTable = document.querySelector('#default-data_table');
-    //const genericDataTable = document.querySelector('#generic-data_table');
     const defaultXCells = defaultDataTable.querySelectorAll('#row-x .cell_input');
     const defaultYCells = defaultDataTable.querySelectorAll('#row-y .cell_input');
-    //const genericXCells = genericDataTable.querySelectorAll('#row-x .cell_input');
     const btnCountLagrange = document.querySelector('#btn_count-Lagrange');
     const btnCountSpline = document.querySelector('#btn_count-spline');
     const fragmentationInput = document.querySelector('.fragmentation_input');
@@ -18,12 +16,6 @@ document.addEventListener("DOMContentLoaded", () => {
     let splines = [];
     let x;
     let step;
-
-    function compare(a, b) {
-        if (a > b) return 1;
-        if (a == b) return 0;
-        if (a < b) return -1;
-      }
 
     function MakeFragmentation(cordArray) {
         let a = +cordArray[0];
@@ -205,36 +197,9 @@ document.addEventListener("DOMContentLoaded", () => {
         resultX = MakeFragmentation(xCords);
         result = GetFunctionY(resultX);
         resultY = result;
-        
-
-        /* if(genericCellsX[0].value !== "") {
-            let genericX = [];
-            let fragmentedX = [];
-    
-            genericCellsX.forEach(cell => {
-                if(cell.value !== '') {
-                    genericX.push(cell.value);
-                }
-            });
-
-            genericX.sort(compare);
-            fragmentedX = MakeFragmentation(genericX);
-            result = GetFunctionY(fragmentedX);
-
-            fragmentedX.forEach(num => {
-                resultX.push(num);
-            });
-
-            result.forEach((num, i) => {
-                resultY.push(num);
-            });
-
-            return;
-        } */
     }
 
     function MethodSpline(defaultCellsX, defaultCellsY) {
-        let result;
 
         xCords = [];
         yCords = [];
@@ -266,16 +231,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
             cordOutput.append(cordBlock);
         });
-
-        /* resultY.forEach(num => {
-            let cordNum = document.createElement('div');
-            cordNum.textContent += `y: ${num}\n`;
-            yOutput.append(cordNum);
-        }); */
     }
 
     btnCountLagrange.addEventListener('click', () => {
-        //GettingData(defaultXCells, defaultYCells, genericXCells);
         MethodLagrenge(defaultXCells, defaultYCells);
         DrawGraph();
         SetValues();
