@@ -26,9 +26,11 @@
                                     <td class="table-cell"><input class="cell_input" type="text"></td>
                                     <td class="table-cell"><input class="cell_input" type="text"></td>
                                     <td class="table-cell"><input class="cell_input" type="text"></td>
+                                    <td class="table-cell"><input class="cell_input" type="text"></td>
                                 </tr>
                                 <tr class="table-row" id="row-y">
                                     <td class="table-cell"><div class="row-name">Y</div></td>
+                                    <td class="table-cell"><input class="cell_input" type="text"></td>
                                     <td class="table-cell"><input class="cell_input" type="text"></td>
                                     <td class="table-cell"><input class="cell_input" type="text"></td>
                                     <td class="table-cell"><input class="cell_input" type="text"></td>
@@ -44,27 +46,33 @@
                         <input type="text" class="fragmentation_input" name="fragmentation_input">
                     </div>
 
-                    <h1>Ввведите точки для вычисления значений функции</h1>
+                    <div class="data-output">
+                        <h1>Результат</h1>
+                        <div class="res_output" id="cord-output"></div>
+                    </div>
+                    
+
+                    <!-- <h1>Ввведите точки для вычисления значений функции</h1>
                     <div class="data_output">
                         <table class="table_output" id="generic-data_table">
                             <tr class="table-row" id="row-x">
                                 <td class="table-cell"><div class="row-name">X</div></td>
                                 <td class="table-cell"><input class="cell_input" type="text"></td>
                                 <td class="table-cell"><input class="cell_input" type="text"></td>
-                                <!-- <td class="table-cell"><input class="cell_input" type="text"></td>
                                 <td class="table-cell"><input class="cell_input" type="text"></td>
-                                <td class="table-cell"><input class="cell_input" type="text"></td> -->
+                                <td class="table-cell"><input class="cell_input" type="text"></td>
+                                <td class="table-cell"><input class="cell_input" type="text"></td>
                             </tr>
-                            <!-- <tr class="table-row" id="polynom-result">
+                            <tr class="table-row" id="polynom-result">
                                 <td class="table-cell"><div class="row-name">Y</div></td>
                                 <td class="table-cell"><div class="output-cell"></div></td>
                                 <td class="table-cell"><div class="output-cell"></div></td>
                                 <td class="table-cell"><div class="output-cell"></div></td>
                                 <td class="table-cell"><div class="output-cell"></div></td>
                                 <td class="table-cell"><div class="output-cell"></div></td>
-                            </tr> -->
+                            </tr>
                         </table>
-                    </div>
+                    </div> -->
 
                 </div>
     
@@ -76,7 +84,8 @@
 
                     <div class="button_block">
                         <!-- <button class="btn" id="btn_draw-graph">Отобразить график функции</button> -->
-                        <button class="btn" id="btn_count-polynom">Вычислить полином</button>
+                        <button class="btn" id="btn_count-Lagrange">Вычислить полином методом Лагранжа</button>
+                        <button class="btn" id="btn_count-spline">Вычислить полином методом сплайна</button>
                     </div>
 
                 </div>
@@ -148,15 +157,15 @@
     
             </div>
             
-            <div class="btn-programms_block">
+            <!-- <div class="btn-programms_block">
                 <button class="btn btn-programm" id="Lagrange_btn">Интерполяция методом Лагранжа</button>
                 <button class="btn btn-programm" id="Spline_btn">Интерполяция кубическим сплайном</button>
-            </div>
+            </div> -->
 
         </div>
 
         <script src="https://www.gstatic.com/charts/loader.js"></script>
         <script src="./Lagrange.js"></script>
-        <script src="./Spline.js"></script>
+        <!-- <script src="./Spline.js"></script> -->
     </body>
 </html>

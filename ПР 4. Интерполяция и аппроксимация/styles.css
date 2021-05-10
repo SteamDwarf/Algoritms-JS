@@ -251,14 +251,24 @@ input {
 	display: flex;
 	justify-content: space-around;
 	text-align: center;
+	width: 300px;
 }
 .output-elem {
 	display: flex;
-	flex-direction: column;
+	justify-content: space-around;
+	margin-bottom: 10px;
+}
+.output-elem:hover {
+	text-decoration: underline 3px #4A90E2;
+	
 }
 .res_output {
-	max-height: 100px;
+	max-height: 200px;
 	overflow: auto;
+}
+.cord-elem {
+	width: 100px;
+	text-align: left;
 }
 .btns-bar {
 	width: 10%;
