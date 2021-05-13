@@ -2,12 +2,12 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     //const func = (x) => Math.sin(x);
-    //const func = (x) => x + 1;
+    const func = (x) => x + 1;
     //const func = (x) => x**2;
     //const func = (x) => 2 / (x + 0.1);
     //const func = (x) => Math.E ** x;
     //const func = (x) => Math.asin(Math.sin(x));
-    const func = (x) => Math.sinh(Math.sin(x));
+    //const func = (x) => Math.sinh(Math.sin(x));
     const funcMcos = (x) => func(x) * Math.cos(x * ik);
     const funcMsin = (x) => func(x) * Math.sin(x * ik);
 
@@ -15,13 +15,15 @@ document.addEventListener('DOMContentLoaded', () => {
     let cordinatesY;
     let cordinatesXF;
     let cordinatesYF;
+    let AkArray;
+    let BkArray;
     //let T = Math.PI;
     let T = 2*Math.PI;
     let a = 0; 
     let b = T;
     let c = -10;
     let d = 10;
-    let k = 30;
+    let k = 100;
     let ik = 0;
     let step = 0.01;
     let curFunc = func;
@@ -81,8 +83,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function IntegralSimpsonCount() {
-        //let fragm = 500;
-        let fragm = 0;
+        let fragm = 500;
+        //let fragm = 0;
         let hnArray = GetFragmentation(1, fragm);
         let h = hnArray[0];
         let n = hnArray[1];
@@ -102,17 +104,18 @@ document.addEventListener('DOMContentLoaded', () => {
         curFunc = func;
         yRes = A0k/ 2;
 
-        for(let i = 1; i <= k; i++) {
-            let Ak;
-            let Bk;
+        for(let i = 0; i < k; i++) {
             let part;
+            ik = i + 1;
+            /* let Ak;
+            let Bk;
 
             ik = i;
             curFunc = funcMcos;
             Ak = 2 / T * IntegralSimpsonCount();
             curFunc = funcMsin;
-            Bk = 2 / T * IntegralSimpsonCount();
-            part = Ak * Math.cos(ik * x) + Bk * Math.sin(ik * x);
+            Bk = 2 / T * IntegralSimpsonCount(); */
+            part = AkArray[i] * Math.cos(ik * x) + BkArray[i] * Math.sin(ik * x);
             yRes += part;
         }
 
@@ -121,6 +124,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function GetResult() {
         let tempA = c;
+        AkArray = [];
+        BkArray = [];
 
         cordinatesXF = [c];
 
@@ -129,13 +134,18 @@ document.addEventListener('DOMContentLoaded', () => {
             cordinatesXF.push(tempA);
         }while(tempA < d);
 
+        for(let i = 0; i < k; i++) {
+            ik = i + 1;
+            curFunc = funcMcos;
+            AkArray[i] = (2 / T * IntegralSimpsonCount());
+            curFunc = funcMsin;
+            BkArray[i] = (2 / T * IntegralSimpsonCount());
+        }
+
         cordinatesYF = [];
         cordinatesXF.forEach(num => { 
             cordinatesYF.push(GetSeriesSum(num));
         });
-
-        console.log(cordinatesXF);
-        console.log(cordinatesYF);
     }
     
     function DrawGraph() {
