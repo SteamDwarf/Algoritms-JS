@@ -1,13 +1,63 @@
 'use strict';
 
 document.addEventListener('DOMContentLoaded', () => {
+    const functionExamplesImgs = document.querySelectorAll('.img-func');
+    const beginSectionInput = document.querySelector('[name="a-cordinate"]');
+    const endSectionInput = document.querySelector('[name="b-cordinate"]');
+    const partNumberInput = document.querySelector('.part_input');
+    const btnDecompose = document.querySelector('#decompose_btn');
+
+    const functionExamples = {
+        func1: {
+            exp: (x) => x + 1,
+            valueT: Math.PI,
+            name: 'x+1'
+        },
+        func2: {
+            exp: (x) => Math.asin(Math.sin(x)),
+            valueT: Math.PI,
+            name: 'arcsin(sin(x))'
+        },
+        func3: {
+            exp: (x) => Math.sign(Math.sin(x)),
+            valueT: 2 * Math.PI,
+            name: 'sign(sin(x))'
+        },
+        func4: {
+            exp: (x) => x * Math.abs(x),
+            valueT: Math.PI,
+            name: 'x*|x|'
+        },
+        func5: {
+            exp: (x) => Math.sinh(Math.sin(x)),
+            valueT: 0.2 * Math.PI,
+            name: 'sh(sin(x))'
+        },
+        func6: {
+            exp: (x) => Math.E ** x,
+            valueT: Math.PI,
+            name: 'e^x'
+        },
+        func7: {
+            exp: (x) => Math.abs(x),
+            valueT: 2,
+            name: '|x|'
+        }
+    };
+
+    //let func = (x) => x**2;
     //const func = (x) => Math.sin(x);
-    const func = (x) => x + 1;
-    //const func = (x) => x**2;
+    
+    //const func = (x) => Math.sin(x)**4;
     //const func = (x) => 2 / (x + 0.1);
     //const func = (x) => Math.E ** x;
     //const func = (x) => Math.asin(Math.sin(x));
+    //const func = (x) => x * Math.abs(x);
+    //const func = (x) => Math.abs(x);
     //const func = (x) => Math.sinh(Math.sin(x));
+    //const func = (x) => Math.sign(Math.sin(x));
+
+    let func = (x) => x + 1;
     const funcMcos = (x) => func(x) * Math.cos(x * ik);
     const funcMsin = (x) => func(x) * Math.sin(x * ik);
 
@@ -15,15 +65,20 @@ document.addEventListener('DOMContentLoaded', () => {
     let cordinatesY;
     let cordinatesXF;
     let cordinatesYF;
+    let A0k;
     let AkArray;
     let BkArray;
+    let T;
+    let funcName;
     //let T = Math.PI;
-    let T = 2*Math.PI;
-    let a = 0; 
-    let b = T;
+    //let T = 0.2 * Math.PI;
+    //let T = 2;
+    //let T = 2*Math.PI;
+    let a; 
+    let b;
     let c = -10;
     let d = 10;
-    let k = 100;
+    let k = 200;
     let ik = 0;
     let step = 0.01;
     let curFunc = func;
@@ -32,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let h, n;
 
         if(fragm === 0) {
-            let maxH = 0.0001 ** (1/4);
+            let maxH = 0.000000001 ** (1/4);
 
             n = Math.ceil((b - a) / maxH);
             n % 2 !== 0 ? ++n : n;
@@ -83,8 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function IntegralSimpsonCount() {
-        let fragm = 500;
-        //let fragm = 0;
+        let fragm = 0;
         let hnArray = GetFragmentation(1, fragm);
         let h = hnArray[0];
         let n = hnArray[1];
@@ -95,26 +149,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function GetSeriesSum(x) {
-/*         const A0k = () => 2 / T * IntegralSimpsonCount(func);
-        const Ak = (x, m) => 2 / T * IntegralSimpsonCount(() => funcMcos(x, m));
-        const Bk = (x, m) => 2 / T * IntegralSimpsonCount(() => funcMsin(x, m)); */
-
         let yRes;
-        let A0k = 2 / T * IntegralSimpsonCount();
         curFunc = func;
         yRes = A0k/ 2;
 
         for(let i = 0; i < k; i++) {
             let part;
             ik = i + 1;
-            /* let Ak;
-            let Bk;
-
-            ik = i;
-            curFunc = funcMcos;
-            Ak = 2 / T * IntegralSimpsonCount();
-            curFunc = funcMsin;
-            Bk = 2 / T * IntegralSimpsonCount(); */
             part = AkArray[i] * Math.cos(ik * x) + BkArray[i] * Math.sin(ik * x);
             yRes += part;
         }
@@ -122,7 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return yRes;
     }
 
-    function GetResult() {
+    function GetFourierFunction() {
         let tempA = c;
         AkArray = [];
         BkArray = [];
@@ -134,6 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
             cordinatesXF.push(tempA);
         }while(tempA < d);
 
+        A0k = 2 / T * IntegralSimpsonCount();
         for(let i = 0; i < k; i++) {
             ik = i + 1;
             curFunc = funcMcos;
@@ -158,6 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             let options = {
                 curveType: 'function',
+                title: `Функция вида ${funcName}`,
                 legend: 'none',
                 focusTarget: 'category',
                 }; 
@@ -177,10 +220,31 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function GetFourierFunction() {
-        GetResult();
-        DrawGraph();
-    }
+    functionExamplesImgs.forEach(img => {
+        img.addEventListener('click', () => {
+            let imgAtr = img.getAttribute('data-func');
 
-    GetFourierFunction();
+            functionExamplesImgs.forEach(img => {
+                img.classList.remove('choosen-func');
+            });
+
+            img.classList.add('choosen-func');
+            func = functionExamples[imgAtr].exp;
+            T = functionExamples[imgAtr].valueT;
+            funcName = functionExamples[imgAtr].name;
+            a = -T;
+            b = T;
+        });
+    });
+
+    btnDecompose.addEventListener('click', () => {
+        c = +beginSectionInput.value;
+        d = +endSectionInput.value;
+        k = +partNumberInput.value;
+
+        GetFourierFunction();
+        DrawGraph();
+    });
+
+    
 });

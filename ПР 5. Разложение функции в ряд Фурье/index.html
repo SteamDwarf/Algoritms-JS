@@ -13,19 +13,14 @@
 
             <div class="function-examples_block">
                 <h1>Примеры функций</h1>
-                <ol class="function_list">
-                    <li>ln( x + sqrt( x^2 + 1.21 )) / x^3</li>
-                    <li>( 1 / x^2 ) * arcsin( x / 9 )</li>
-                    <li>x * e^(-x)</li>
-                    <li>sqrt( sin(x) ) * cos(0.5 * x)</li>
-                    <li>1 / (10 + 6 * sin(x + e))</li>
-                    <li>cos(x) / ( x^2 + 1 )</li>
-                    <li>cos(x) / ( sin(x) + ( 1 + sin(x) ))</li>
-                    <li>x^5 / (sqrt(0.36 + x^2))^5</li>
-                    <li>1 / (0.5 * sin(x) + 3 * cos(x))^2</li>
-                </ol>
-                <div class="instruction">
-                    <button class="btn" id="btn-instruction">Указания</button>
+                <div class="img-func_block">
+                    <img src="./img/func1.jpg" class="img-func" alt="x + 1" title="x + 1" data-func="func1">
+                    <img src="./img/func2.jpg" class="img-func" alt="arcsin(sin(x))" title="arcsin(sin(x))" data-func="func2">
+                    <img src="./img/func3.jpg" class="img-func" alt="sign(sin(x))" title="sign(sin(x))" data-func="func3">
+                    <img src="./img/func4.jpg" class="img-func" alt="x*|x|" title="x*|x|" data-func="func4">
+                    <img src="./img/func5.jpg" class="img-func" alt="sh(sin(x))" title="sh(sin(x))" data-func="func5">
+                    <img src="./img/func6.jpg" class="img-func" alt="e^x" title="e^x" data-func="func6">
+                    <img src="./img/func7.jpg" class="img-func" alt="|x|" title="|x|" data-func="func7">
                 </div>
             </div>
 
@@ -44,16 +39,8 @@
                             <input class="cord_input" type="text" name="b-cordinate">
                         </div>
                         <div class="input-label">
-                            <label for="function-input">Введите функцию</label>
-                            <input type="text" class="func_input" name="function-input">
-                        </div>
-                        <div class="input-label">
-                            <label for="fragmentation-input">Количество разбиений</label>
-                            <input class="fragment_input" type="text"  name="fragmentation-input">
-                        </div>
-                        <div class="input-label">
-                            <label for="dots-input">Количество точек</label>
-                            <input class="dots_input" type="text"  name="dots-input">
+                            <label for="function-input">Количество членов ряда</label>
+                            <input type="text" class="part_input" name="part-input">
                         </div>
                     </div>
 
@@ -63,52 +50,12 @@
                     <div id="curve_chart"></div>
                 </div>
 
-                <div class="data_output">
-                    <div class="output-elem">
-                        <label>Итоговое количество разбиений</label>
-                        <div class="fragm_output"></div>
-                    </div>
-                    <div class="output-elem">
-                        <label>Результат</label>
-                        <div class="res_output"></div>
-                    </div>
-                    <div class="output-elem">
-                        <label>Погрешность</label>
-                        <div class="error_output"></div>
-                    </div>
+                <div class="btns_bar">
+                    <button class="btn" id="decompose_btn">Разложить</button>
                 </div>
 
             </div>
 
-            <div class="btns-bar">
-                <button class="btn" id="btn-Simpson">Расчитать по методу Симпсона</button>
-                <button class="btn" id="btn-MonteCarlo">Расчитать по методу Монте-Карло</button>
-            </div>
-
-        </div>
-
-        <div class="modal" id="modal-form"> 
-            <div class="modal_dialog">
-                <div class="modal_content">
-                    <button type="button" class="modal_close"><strong>&times;</strong></button>
-                    <div class="modal_form">
-                        <h1 class="header-instruction">Указания</h1>
-                        <div class="main-instruction">
-                            <ol>
-                                <li>Десятичные дроби необходимо вводить не через запятую, а через точку</li>
-                                <li>На данный момент программа понимает такие математические константы и методы, как: 
-                                    <span class="math-func">ln, cos, sin, tg, sqrt, arctg, arccos, arcsin, e, pi</span> 
-                                </li>
-                                <li>При вводе своей функции <span class="warn-text">обязательно</span> перед <span class="math-func">tg, cos, sin</span> ставить пробел</li>
-                                <li>При расчете методом Симпсона не обязательно вводить количество разбиений,
-                                    так как был создан метод, который подсчитывал оптимальное количество разбиений
-                                </li>
-                                <li>При расчете методом Монте-Карло <span class="warn-text">обязательно</span> ввести количество точек</li>
-                            </ol>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <script src="https://www.gstatic.com/charts/loader.js"></script>

@@ -51,11 +51,31 @@ body {
 	flex-direction: column;
 	text-align: center;
 	width: 20%;
+	max-height: 750px;
 	padding: 20px;
 	box-shadow: -5px 0 10px 5px rgba(221, 221, 221, 1);
 	border-right: solid 5px #b3b3b3;
 }
-.function_list  li{
+.img-func_block {
+	overflow: auto;
+}
+.img-func {
+	width: 200px;
+	height: 200px;
+	margin-top: 20px;
+	transition: transform 0.3s;
+}
+.img-func:hover {
+	transform: scale(1.5, 1.5);
+	border: none;
+	cursor: pointer;
+}
+.choosen-func {
+	padding: 15px;
+	border: 2px solid #4A90E2;
+	border-radius: 5px;
+}
+/* .function_list  li{
 	width: 100%;
 	cursor: pointer;
 	border: 1px solid #4A90E2;
@@ -63,7 +83,7 @@ body {
 	list-style-type: none;
 	margin-bottom: 5px;
 	padding: 5px;
-}
+} */
 .instruction {
 	margin-top: 50px;
 }
@@ -128,9 +148,10 @@ input {
 	display: flex;
 	flex-direction: column;
 }
-.btns-bar {
-	width: 10%;
-	padding: 123px 0;
+.btns_bar {
+	display: flex;
+	justify-content: center;
+	width: 100%;
 }
 .btn {
 	width: 180px;
